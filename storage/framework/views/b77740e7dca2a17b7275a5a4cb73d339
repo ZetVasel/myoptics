@@ -1,0 +1,129 @@
+<?php $__env->startSection('main'); ?>
+
+
+	<h1>
+		<a href="/master/products/edit/<?php echo e($post->id); ?>" class="glyphicon glyphicon-circle-arrow-left"></a>
+		
+		<?php echo e($title); ?>
+
+		<span class="label label-default">
+			<?php echo e(count($post->imgs)); ?>
+
+			<?php echo e(Lang::choice('фотография|фотографии|фотографий', count($post->imgs), array(), 'ru')); ?>
+
+		</span>
+	</h1>
+	
+	
+	<?php echo Form::open(array( 'id' => 'upload_form', 'class' => 'form-horizontal', 'role' => 'form', 'files' => true ) ); ?>
+
+
+	<div class="form-group">
+		<div class="col-sm-8">
+			<?php echo Form::file('image[]', array('class' => 'filestyle', 'data-value'=> '', 'data-buttonText' => 'Выбрать файлы', 'data-buttonName' => 'btn-primary', 'data-icon' => 'false' , 'multiple' => 'true') ); ?>
+
+		</div>
+		<!-- <span class="help-block col-sm-12">Оптимальный размер изображений 600 x 640</span> -->
+	</div>
+
+	<div class="form-group" >
+		<div class="col-sm-10">
+		  <button type="submit" class="btn btn-success">Загрузить</button>
+		</div>
+	</div>
+	
+	<?php echo Form::close(); ?>
+
+	
+			<?php if( $post->imgs != '' ): ?>
+
+				<?php echo Form::open(['id'=>'list' ]); ?>
+
+
+					<div class="row">
+						<?php foreach( $post->imgs as $key => $photo ): ?>
+						  <div class="col-sm-3 col-md-2">
+							<div class="thumbnail">
+							 <img style="width: 100%;" alt="photo" src="/uploads/products/lg/<?php echo e($photo); ?>">
+							  <div class="caption">
+									<div class="btn-group">
+										<button type="button" class="btn btn-default"><input style="margin: 0;" name="check[]" value="<?php echo e($key); ?>" type="checkbox"></button>
+										<div data-id="<?php echo e($post->id); ?>" data-key="<?php echo e($key); ?>" data-mimg="<?php echo e($post->main_img); ?>" style="float:left;">
+											<a title="Основное изображение" style="border-radius: 0;" class="main_img btn <?php if( $post->main_img == $key ): ?>btn-success visible <?php else: ?> btn-default <?php endif; ?>">
+												<span class="glyphicon glyphicon-eye-open"></span>
+											</a>
+										</div>
+										<button title="Удалить" type="button" class="delete btn btn-danger" data-id="<?php echo e($key); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+									</div>
+								</div>
+							</div>
+						  </div>
+						<?php endforeach; ?>
+					</div>
+
+					<div class="select_form">
+						<label id="check_all" class="link">Выбрать все</label>
+						<select name="action" class="form-control">
+						  <option value="delete">Удалить</option>
+						</select>
+						<button type="submit" style="margin-left: 20px;" class="btn btn-success">Применить</button>
+					</div>
+
+				<?php echo Form::close(); ?>
+
+
+
+			<?php else: ?>
+				<div class="alert alert-warning" role="alert">
+					Нет изображений
+				</div>
+			<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+<script src="/dashboard/js/imagesloaded.pkgd.min.js"></script>
+
+<script>
+	$(function() {
+
+		// удаление записи
+		$('.delete').click( function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', false);
+			$(this).closest(".btn-group").find('input[type="checkbox"][name*="check"]').prop('checked', true);
+			$(this).closest("form#list").find('select[name="action"] option[value=delete]').prop('selected', true);
+			$(this).closest("form#list").submit();
+		});
+		$('.main_img').click(function(){
+			var img_num = $(this).parent().data('key');
+			var product_id = $(this).parent().data('id');
+			var mainimg = $(this).parent().data('mimg');
+
+			var icon = $(this);
+
+			$('.main_img').each(function(){
+				$(this).removeClass('btn-success visible');
+				$(this).addClass('btn-default');
+			});
+
+			icon.addClass('btn-success visible');
+
+			$.post( '/master/products', { _token: '<?php echo e(Session::token()); ?>', id: product_id, main_img: img_num });
+			return false;
+		});
+
+		// удаление записей
+		$("form#list").submit(function() {
+			if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
+				return false;
+		});
+
+		// выделить все
+		$("#check_all").on( 'click', function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', $('input[type="checkbox"][name*="check"]:not(:checked)').length>0 );
+		});
+	})
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

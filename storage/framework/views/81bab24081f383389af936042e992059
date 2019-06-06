@@ -1,0 +1,84 @@
+<?php $__env->startSection('main'); ?>
+	<div class="breadCrumbBg news">
+		<div class="container">
+			<div class="row">
+				<ul class="breadCrumbs col-xs-12">
+					<li><a href="/">Главная</a></li>
+					<li><a href="/<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+				</ul>
+				<div class="title col-xs-12">
+					Статьи
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="newsContentBg">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+
+					<?php if( count($news) ): ?>
+						<?php foreach( $news as $n ): ?>
+
+                            <?
+                            $date = explode(' ',$n->created_at);
+                            $date = explode('-', $date[0]);
+
+                            $year = $date[0];
+                            $mounth = $date[1];
+                            $day = $date[2];
+                            ?>
+
+							<div class="item">
+								<div class="leftImage">
+									<div class="date">
+										<div class="number"><?php echo e($day); ?></div>
+										<div class="mounth"><?php echo e($mounth); ?>/<?php echo e($year); ?></div>
+									</div>
+									<img src="/uploads/news/<?=!empty($n->image) ? $n->image : 'no_image.png'?>" alt="#">
+								</div>
+								<div class="rightBlock">
+									<div class="content">
+										<div class="title"><?php echo e($n->name); ?></div>
+										<div class="text">
+											<div class="descr">
+												<?php echo e(substr(strip_tags($n->body), 0 , 580)); ?>
+
+											</div>
+										</div>
+										<a href="/news/<?php echo e($n->slug); ?>" class="more">Подробнее</a>
+									</div>
+								</div>
+							</div>
+
+						<?php endforeach; ?>
+					<?php else: ?>
+						<p class="empty_query">На данный момент новости отсутствуют</p>
+					<?php endif; ?>
+
+					<div class="newsPaginationBg">
+						<div class="row">
+							<?php echo $__env->make('frontend._pagination',['paginator'=>$news->appends(Request::all())], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<?php echo $page->body; ?>
+
+			</div>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+	<link rel="stylesheet" href="/frontend/css/news.css">
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

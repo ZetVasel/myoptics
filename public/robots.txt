@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /personal-area
+Disallow: /search
+Disallow: /cart
+Disallow: /cartStepTwo
+Disallow: /contacts
+Disallow: /master
+
+Host: myoptics.com.ua
+Sitemap: https://myoptics.com.ua/sitemap.xml

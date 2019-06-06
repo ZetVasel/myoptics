@@ -1,0 +1,36 @@
+<?php $__env->startSection('main'); ?>
+
+	<div class="breadCrumbBg contacts">
+		<div class="container">
+			<div class="row">
+				<ul class="breadCrumbs col-xs-12">
+					<li><a href="/">Главная</a></li>
+					<?php if( Request::segment(1) =='news' ): ?>
+						<li><a href="/news">Новости</a></li>
+						<li><a href="/news/<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+					<?php elseif( Request::segment(1) =='brand' ): ?>
+						<li> <a href="/brand/<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+					<?php else: ?>
+						<li><a href="/<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+					<?php endif; ?>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container container-body">
+		<div style="margin-top: 30px;margin-bottom: 30px;" class="col-xs-12">
+			<?php echo $page->body; ?>
+
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+	<link rel="stylesheet" href="/frontend/css/contacts.css">
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('frontend.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

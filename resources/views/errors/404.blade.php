@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>Страница не найдена</title>
+
+	<link rel="stylesheet" href="/frontend/css/style.css">
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            color: #000;
+            display: table;
+            margin: 0 auto;
+            font-weight: 100;
+            font-family: Arial, Helvetica, sans-serif;
+        } 
+        .container {
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .content {
+            text-align: center;
+            display: inline-block;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        a{
+        	color: #b17e2b;
+            display: block !important;
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        .back{
+            display: block;
+            width: 300px;
+            margin: 0 auto;
+            font-size: 22px !important;
+            height: auto;
+            line-height: 36px;
+            text-decoration: none !important;
+            /*color: #fff !important;*/
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <img src="/frontend/img/404.png" alt="Not found">
+            <h1>Запрашиваемая страница не найдена</h1>
+            <a href="{{ Request::root() }}" style="font-weight: bold;" class="">Главная</a>
+            <a href="{{ ( URL::previous() != Request::url() ) ? URL::previous() : Request::root() }}" class="back button button-bold button-rounded button-boxshadow button-textshadow button-blue-bg-3">Назад</a>
+        </div>
+    </div>
+</body>
+</html>

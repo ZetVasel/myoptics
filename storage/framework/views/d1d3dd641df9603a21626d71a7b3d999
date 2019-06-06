@@ -1,0 +1,684 @@
+<?php $__env->startSection('product'); ?>	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('description'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('specification'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('reviews'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('add-reviews'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('main'); ?>
+    <? $show = 0; ?>
+
+
+
+	<div class="breadCrumbBg card">
+		<div class="container">
+			<div class="row">
+				<ul class="breadCrumbs col-xs-12">
+					<li><a href="/">Главная</a></li>
+					<?php foreach( $breadcrumbs as $par ): ?>
+						<?php if( isset($par) ): ?>
+							<li><a href="/category/<?php echo e($par->slug); ?>"><?php echo e($par->name); ?></a></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+					<?php if( Request::segment(1) == 'product' && isset($page) ): ?>
+						<li><a href="<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<div class="productCardBg">
+		<div class="container">
+			<div class="row">
+				<div class="productCard col-lg-12 col-md-8 col-sm-8">
+					<div class="title">
+						<?php echo e($page->name); ?>
+
+						<span class="code">Артикул: <?php echo e($page->code); ?></span>
+					</div>
+				</div>
+
+				<div class="productInfoContent col-xs-12">
+					<div class="row">
+						<div class="anchors col-xs-12">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<div class="row">
+										<a href="#description" class="item col-lg-4 col-md-4 col-sm-4 col-xs-4">
+											Описание
+										</a>
+
+										<a href="#charlist" class="item col-lg-4 col-md-4 col-sm-4 col-xs-4">
+											Характеристики
+										</a>
+
+
+										<a href="#rewiew" class="item col-lg-4 col-md-4 col-sm-4 col-xs-4">
+											Отзывы
+										</a>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+
+						<div class="productImage col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="image <?php if($page->discount == 1): ?> discount <?php endif; ?> <?php if($page->new == 1): ?> new <?php endif; ?> <?php if($page->sale == 1): ?> sale <?php endif; ?> hidden-xs">
+								<?php if($page->image): ?>
+									<img src="/uploads/products/lg/<?php echo e($page->image); ?>" alt="#">
+								<?php else: ?>
+									<div class="item">
+										<img src="/uploads/products/lg/no_image.png" alt="no_image">
+									</div>
+								<?php endif; ?>
+							</div>
+							<div id="xsSliderImage" class="visible-xs-block col-xs-12">
+								<?php if($page->image): ?>
+									<?php foreach( $page->imgs as $key_img => $img ): ?>
+										<div class="item">
+											<img src="/uploads/products/lg/<?php echo e($img); ?>" alt="<?php echo e($page->name.' '.($key_img+1)); ?>">
+										</div>
+									<?php endforeach; ?>
+								<?php else: ?>
+									<div class="item">
+										<img src="/uploads/products/lg/no_image.png" alt="no_image">
+									</div>
+								<?php endif; ?>
+							</div>
+
+
+
+							<?php if($page->image): ?>
+								<div class="imageSlider hidden-xs">
+
+									<?php foreach( $page->imgs as $key_img => $img ): ?>
+										<div class="item">
+											<img src="/uploads/products/sm/<?php echo e($img); ?>" alt="<?php echo e($page->name.' '.($key_img+1)); ?>">
+										</div>
+									<?php endforeach; ?>
+
+								</div>
+							<?php endif; ?>
+						</div>
+
+						<div class="productTabs col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="rating">
+								<span>Рейтинг:</span>
+								<div class="starts">
+									<?php for($i = 0; $i < 5 ;$i++): ?>
+										<div class="item <?php if($page->votes != 0): ?> <?php if($i < (int)($page->rating_sum / $page->votes) ): ?> active <?php endif; ?> <?php endif; ?> "></div>
+									<?php endfor; ?>
+								</div>
+							</div>
+
+							<?php if(count($charlist_options) > 0): ?>
+								<div class="tabs">
+									<ul>
+										<li id="single" data-checkout="1">Одинаковые</li>
+										<li id="double" data-checkout="0">Разные</li>
+									</ul>
+									<div class="tabsContent">
+										<div class="item" id="single_charlist">
+
+											<form action="/cartCharlist" method="post" id="singleCharlist">
+												<?php echo csrf_field(); ?>
+
+												<input type="hidden" name="prod_id" value="<?php echo e($page->id); ?>">
+												<input type="hidden" id="single_quanbtity" name="single_quanbtity" value="1">
+
+												<?php foreach( $charlist as $char ): ?>
+													<?
+														$flag = false;
+														if(isset($charlist_options[$char->id])){
+															$array = $charlist_options[$char->id];
+														}else{
+															$array = [];
+														}
+													?>
+														<?php foreach( $char->variants as $key => $v ): ?>
+															<?php if(is_array($array=[]) && isset($char->variants[$key])): ?>
+																<?php if(in_array($v->name, $array)): ?>
+																<?
+																	$flag = true;
+																?>
+															<?php endif; ?>
+														<?php endif; ?>
+														<?php endforeach; ?>
+
+													<?php if( isset($charlist_options[$char->id]) && $flag = true): ?>
+													<div class="charlist">
+														<div class="name"><?php echo e($char->name); ?> Вот див для выбора обьема товара</div> // Here we add id for bd !!
+														<div class="single">
+															<select data-smart-positioning="false" class="featureSelect" name="feature[]">
+																<?php foreach( $char->variants as $v ): ?>
+																	<?php if(in_array($v->name, $charlist_options[$char->id])): ?>
+																		<option value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></option>
+																	<?php endif; ?>
+																<?php endforeach; ?>
+															</select>
+														</div>
+													</div>
+													<?php endif; ?>
+												<?php endforeach; ?>
+											</form>
+
+													<div class="charlist">
+														<div class="name">Количество</div>
+														<div class="single">
+															<div class="count">
+																<input type="hidden" name="totalSingle" value="1">
+																<div class="minus">-</div>
+																<span class="total">1</span>
+																<div class="plus">+</div>
+															</div>
+														</div>
+													</div>
+
+										</div>
+
+
+										<div class="item" id="double_charlist">
+
+
+											<form action="/cartCharlist" method="post" id="doubleCharlist">
+												<?php echo csrf_field(); ?>
+
+												<input type="hidden" name="prod_id" value="<?php echo e($page->id); ?>">
+												<input type="hidden" id="quantityLeft" name="quantityLeft" value="1">
+												<input type="hidden" id="quantityRight" name="quantityRight" value="1">
+
+												<?php foreach( $charlist as $char ): ?>
+													<? 
+														$flag = false; 
+														if(isset($charlist_options[$char->id])){
+															$array = $charlist_options[$char->id];
+														}else{
+															$array = [];
+														}
+													?>
+
+													<?php foreach( $char->variants as $v ): ?>
+														<?php if(in_array($v->name, $array)): ?>
+															<? $flag = true; ?>
+														<?php endif; ?>
+													<?php endforeach; ?>
+
+													<?php if( isset($charlist_options[$char->id] ) && $flag ): ?>
+													<div class="charlist">
+														<div class="name"><?php echo e($char->name); ?></div>
+														<div class="leftEye">
+															<select data-smart-positioning="false" class="featureSelect" name="featureleft[]">
+																<?php foreach( $char->variants as $v ): ?>
+																	<?php if(in_array($v->name, $charlist_options[$char->id])): ?>
+																		<? $show = 1; ?>
+																		<option value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></option>
+																	<?php endif; ?>
+																<?php endforeach; ?>
+															</select>
+														</div>
+
+														<div class="rightEye">
+															<select data-smart-positioning="false" class="featureSelect" name="featureright[]">
+																<?php foreach( $char->variants as $v ): ?>
+																	<?php if(in_array($v->name, $charlist_options[$char->id])): ?>
+																		<option value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></option>
+																	<?php endif; ?>
+																<?php endforeach; ?>
+															</select>
+														</div>
+													</div>
+													<?php endif; ?>
+												<?php endforeach; ?>
+											</form>
+
+											<div class="charlist">
+												<div class="name">Количество</div>
+												<div class="leftEye">
+													<div class="count">
+														<input type="hidden" name="totalLeft" value="1">
+														<div class="minus">-</div>
+														<span class="total">1</span>
+														<div class="plus">+</div>
+													</div>
+												</div>
+
+												<div class="rightEye">
+													<div class="count">
+														<input type="hidden" name="totalRight" value="1">
+														<div class="minus">-</div>
+														<span class="total">1</span>
+														<div class="plus">+</div>
+													</div>
+												</div>
+											</div>
+
+
+
+
+
+										</div>
+									</div>
+								</div>
+							<?php else: ?>
+<div class="tabs">
+								
+									<div class="tabsContent">
+
+<div class="item" id="double_charlist">
+
+
+											<form action="/cartCharlist" method="post" id="singleCharlist">
+												<?php echo csrf_field(); ?>
+
+												<input type="hidden" name="prod_id" value="<?php echo e($page->id); ?>">
+												<input type="hidden" id="single_quanbtity" name="single_quanbtity" value="1">
+												<input type="hidden" id="feature" name="feature[]" value="">
+											
+
+
+</form>
+												<div class="charlist">
+														<div class="name">Количество</div>
+														<div class="single">
+															<div class="count">
+																<input type="hidden" name="totalSingle" value="1">
+																<div class="minus">-</div>
+																<span class="total">1</span>
+																<div class="plus">+</div>
+															</div>
+														</div>
+													</div>
+
+
+
+
+
+										</div>
+										</div>
+										</div>
+
+
+							<?php endif; ?>
+
+							<div class="row">
+								<div class="prices col-xs-12">
+									<?php if($page->oldPrice > 0): ?>
+										<div class="old"><?php echo e(number_format($page->oldPrice, 2, ',', '')); ?></div>
+									<?php endif; ?>
+									<div class="now"><span><?php echo e(number_format($page->price - ($page->price * $userDiscount), 2, ',', '')); ?></span> Грн</div>
+								</div>
+								
+								<a id="buy" class="button" href="#">
+									Купить
+								</a>
+									
+							</div>
+
+						</div>
+
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="infoBlock col-xs-12">
+					<div class="title" id="description">
+						<span>Описание</span>
+					</div>
+					<div class="text">
+						<?php echo $page->body; ?>
+
+					</div>
+				</div>
+
+
+				<div class="infoBlock col-xs-12">
+					<div class="title" id="charlist">
+						<span>Характеристики</span>
+					</div>
+					<div class="row">
+						<table class="charTable">
+
+							<tbody>
+
+							<?php if( isset($page->specification) && $page->specification != '' ): ?>
+								<?php foreach($page->specification as $dtbl): ?>
+									<tr>
+										<td class="col-lg-3 col-md-4 col-sm-4 col-xs-6"> <?php echo e($dtbl['name']); ?> </td>
+										<td class="col-lg-9 col-md-8 col-sm-8 col-xs-6"> <?php echo e($dtbl['value']); ?> </td>
+									</tr>
+								<?php endforeach; ?>
+							<?php else: ?>
+								Пусто
+							<?php endif; ?>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+
+
+
+				<div class="infoBlock col-xs-12">
+					<div class="title" id="rewiew">
+						<span>Отзывы (<?php echo e(count($prod_reviews)); ?>)</span>
+					</div>
+
+					<div class="reviews">
+						<div class="sendReviewForm">
+							<div id="avatar" class="avatar">
+								<img src="/uploads/avatar/no_avatar.png" alt="#">
+							</div>
+							<div class="formContent">
+
+
+
+								<form action="/sendRewiew" method="post">
+									<?php echo csrf_field(); ?>
+
+									<div id="rating" class="rating">
+
+										<input type="hidden" name="stars" id="stars" value="0">
+										<input type="hidden" name="product_id" value="<?php echo e($page->id); ?>">
+
+										<span>Оцените продукт</span>
+
+
+										<div class="stars">
+											<input type="radio" name="star" class="star-1" id="star-1" />
+											<label data-count="1" class="star-1 starSelect" for="star-1">1</label>
+											<input type="radio" name="star" class="star-2" id="star-2" />
+											<label data-count="2" class="star-2 starSelect" for="star-2">2</label>
+											<input type="radio" name="star" class="star-3" id="star-3" />
+											<label data-count="3" class="star-3 starSelect" for="star-3">3</label>
+											<input type="radio" name="star" class="star-4" id="star-4" />
+											<label data-count="4" class="star-4 starSelect" for="star-4">4</label>
+											<input type="radio" name="star" class="star-5" id="star-5" />
+											<label data-count="5" class="star-5 starSelect" for="star-5">5</label>
+											<span></span>
+										</div>
+
+									</div>
+									<div class="rewiewText">
+										<input id="fullRewiew" type="text" name="text" placeholder="Оставьте здесь ваш отзыв">
+									</div>
+
+
+									<?php if(!Auth::check()): ?>
+
+										<div class="bottomRewiw">
+											<div class="inputs">
+												<input type="text" name="name" placeholder="Ваше Имя">
+												<input type="text" name="mail" placeholder="Электронная почта">
+											</div>
+											<div class="social">
+												<div class="stext"> Войти используя </div>
+												<div class="socials">
+													<a href="<?php echo e($facebookAuthLink); ?>" rel="nofollow" ><img src="/frontend/img/social/fb.png" alt="#"></a>
+													<a href="<?php echo e($googleAuthLink); ?>" rel="nofollow" ><img src="/frontend/img/social/google.png" alt="#"></a>
+												</div>
+											</div>
+										</div>
+									<?php endif; ?>
+
+									<input type="submit" value="Отправить">
+
+								</form>
+							</div>
+						</div>
+
+						<div class="items">
+
+							<?php if(count($prod_reviews) > 0): ?>
+
+								<?php foreach($prod_reviews as $item ): ?>
+									<div class="itemRewiew">
+										<div class="avatar">
+											<img src="/uploads/avatar/no_avatar.png" alt="#">
+										</div>
+
+										<div class="content">
+											<div class="top">
+												<div class="name"><?php echo e($item->name); ?></div>
+												<div class="stars">
+													<?php for($i = 0; $i < 5; $i++): ?>
+														<div class="item <?php if($i < $item->rating): ?> active <?php endif; ?>"></div>
+													<?php endfor; ?>
+												</div>
+												<?php /*<div class="date">26.01.17  00:11</div>*/ ?>
+												<?php /* 2017-06-01 17:51:18*/ ?>
+
+												<?
+													//todo
+												$date = explode(' ', $item->created_at);
+												$d = explode('-',  $date[0]);
+
+//												var_dump($date[0]);exit();
+
+												$y = $d[0];
+												$m = $d[1];
+												$dd = $d[2];
+
+
+                                                $d2 = explode(':', $date[1]);
+
+                                                $h = $d2[0];
+                                                $min = $d2[1];
+
+                                                ?>
+
+												<div class="date"><?php echo e($dd); ?>.<?php echo e($m); ?>.<?php echo e($y); ?> <?php echo e($h); ?>:<?php echo e($min); ?></div>
+											</div>
+											<div class="allText">
+												<?php echo e($item->text); ?>
+
+											</div>
+
+										</div>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
+
+
+
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+	<?php if( count( $alike_pr ) > 0 ): ?>
+
+	<div class="alikeGoodsBg">
+		<div class="container">
+			<div class="alikeGoodsBlock col-xs-12">
+				<div class="ltitle">C этим товаром также покупают</div>
+
+
+				<div class="alikeGoodsSlider row">
+
+
+
+					<?php foreach( $alike_pr as $hit): ?>
+
+						<div class="product col-lg-3 col-md-4 col-sm-4 col-xs-12">
+							<div class="item">
+								<div class="image">
+									<?php if( $hit->image !=''): ?>
+										<img src="/uploads/products/md/<?php echo e($hit->image); ?>" alt="<?php echo e($hit->name); ?>">
+									<?php else: ?>
+										<img src="/uploads/products/md/no_image.png" alt="#">
+									<?php endif; ?>
+								</div>
+								<div class="information">
+									<div class="title"><?php echo e($hit->name); ?></div>
+									<div class="text">
+										<?php echo e(substr(strip_tags($hit->description), 0 , 120).'...'); ?>
+
+									</div>
+									<div class="prices">
+										<?php if($hit->oldPrice > 0): ?>
+											<div class="old"><?php echo e(number_format($hit->oldPrice, 2, ',', '')); ?></div>
+										<?php endif; ?>
+										<div class="now"><span><?php echo e(number_format($hit->price - ($hit->price * $userDiscount), 2, ',', '')); ?></span> Грн</div>
+									</div>
+
+									<a class="button" href="#">
+										Подробнее
+									</a>
+
+								</div>
+								<div class="up-block">
+									<div class="starts">
+										<?php for($i = 0; $i < 5 ;$i++): ?>
+											<div class="item <?php if($hit->votes != 0): ?> <?php if($i < (int)($hit->rating_sum / $hit->votes) ): ?> active <?php endif; ?> <?php endif; ?> "></div>
+										<?php endfor; ?>
+									</div>
+
+									<div class="characteristics">
+                                        <?php echo e($count = 0); ?>
+
+
+										<?php foreach(unserialize($hit->specification) as $dtbl): ?>
+											<?php if($count++ > 2): ?> <? break; ?>  <?php endif; ?>
+											<div class="item">
+												<div class="title"><?php echo e($dtbl['name']); ?></div>
+												<div class="value"><?php echo e($dtbl['value']); ?></div>
+											</div>
+										<?php endforeach; ?>
+									</div>
+
+									<a class="button" href="/product/<?php echo e($hit->slug); ?>">
+										Подробнее
+									</a>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+
+
+
+
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
+
+<?php endif; ?>
+
+
+
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+	<link rel="stylesheet" href="/frontend/css/card.css">
+	<link rel="stylesheet" href="/frontend/js/slick/slick-theme.css">
+	<link rel="stylesheet" href="/frontend/js/slick/slick.css">
+	<link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.css">
+	<link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.theme.css">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+	<!--formStyler-->
+	<script type="text/javascript" src="/frontend/js/formStyler/jquery.formstyler.min.js"></script>
+	<!--slick slider-->
+	<script src="/frontend/js/slick/slick.min.js"></script>
+	<script type="text/javascript" src="/frontend/js/card.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+            $('.overlayCart').css({ "opacity" : "1", "visibility" : "visible"});
+        });
+
+		
+		function singleToCart() {
+
+
+//		    console.log('single');
+
+           
+			$('#single_quanbtity').val(+$('input[name="totalSingle"]').val());
+			$('#singleCharlist').submit();
+
+        }
+		function doubleToCart() {
+//            console.log('double');
+
+			
+
+            $('#quantityLeft').val(+$('input[name="totalLeft"]').val());
+            $('#quantityRight').val(+$('input[name="totalRight"]').val());
+			$('#doubleCharlist').submit();
+        }
+		
+		
+		$('#buy').click(function (e) {
+			e.preventDefault();
+
+
+			console.log();
+
+			var single = $('#single').hasClass('active');
+//			var singleQ = +$('#single_quanbtity').val();
+
+//            console.log('single='+single);
+//            console.log('singleQ='+singleQ);
+
+			if(single){
+			    singleToCart();
+			}else{
+			    doubleToCart();
+			}
+
+        });
+
+		$('label.starSelect').click(function () {
+			$('#stars').val($(this).data('count'));
+        });
+
+
+	</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

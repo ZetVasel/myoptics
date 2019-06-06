@@ -1,0 +1,84 @@
+<?php $__env->startSection('main'); ?>
+
+	<h1>
+		<a href="/master/products_management" class="glyphicon glyphicon-circle-arrow-left"></a>
+		<a href="/master/delivery/add" class="glyphicon glyphicon-plus-sign"></a><?php echo e($title); ?> <span class="label label-default"><?php echo e($delivery_count); ?></span>
+	</h1>
+
+	<?php if(Session::has('message')): ?>
+		<div class="alert alert-success" role="alert"><?php echo e(Session::get('message')); ?></div>
+	<?php endif; ?>
+
+	<?php if( count($delivery)>0 ): ?>
+		<?php echo Form::open(); ?>
+
+			<table class="table">
+				<tr>
+					<th style="width: 30%;">Название</th>
+					<th style="width: 20%;">Стоимость</th>
+					<th style="text-align: right;">Управление</th>
+				</tr>
+				<?php foreach($delivery as $post): ?>
+				<tr>
+					<td style="vertical-align: middle">
+						<input name="check[]" value="<?php echo e($post->id); ?>" type="checkbox"><a class="black_link" href="/master/delivery/edit/<?php echo e($post->id); ?>"><?php echo e($post->name); ?></a><br>
+					</td>
+					<td><?php echo e($post->price); ?> грн</td>
+					<td style="text-align: right;">
+						<div class="btn-group">
+							<a title="Редактировать" href="/master/delivery/edit/<?php echo e($post->id); ?>" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span></a>
+							<button title="Удалить" type="button" class="delete btn btn-danger" data-id="<?php echo e($post->id); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+
+			<div class="select_form">
+				<label id="check_all" class="link">Выбрать все</label>
+				<select name="action" class="form-control">
+				  <option value="delete">Удалить</option>
+				</select>
+				<button type="submit" style="margin-left: 20px;" class="btn btn-success">Применить</button>
+			</div>
+		<?php echo Form::close(); ?>
+
+
+		<!-- navigation //-->
+		<?php echo $delivery->render(); ?>
+
+
+	<?php else: ?>
+		<div class="alert alert-warning" role="alert">
+		 Нет записей
+		</div>
+	<?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+	<script>
+	 $(function() {
+
+		// удаление записи
+		$('.delete').click( function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', false);
+			$(this).closest("tr").find('input[type="checkbox"][name*="check"]').prop('checked', true);
+			$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
+			$(this).closest("form").submit();
+		})
+
+		// удаление записей
+		$("form").submit(function() {
+			if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
+				return false;
+		});
+		
+		// выделить все
+		$("#check_all").on( 'click', function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', $('input[type="checkbox"][name*="check"]:not(:checked)').length>0 );
+		});
+	})
+	</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

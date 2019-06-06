@@ -1,0 +1,198 @@
+<?php $__env->startSection('main'); ?>
+
+    <div style="background-image: none" class="breadCrumbBg lenses">
+        <div class="container">
+            <div class="row">
+                <ul class="breadCrumbs col-xs-12">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+                </ul>
+                <div class="title col-xs-12">
+                    Результаты по запросу "<?php echo e($search); ?>"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lensesContentBg">
+        <div class="container">
+            <div class="row">
+
+                <div class="rightBar allseen col-lg-12">
+
+                    <div class="row">
+
+                        <!--Список-->
+                        <div id="productList" <?php if(Session::get('show') == 1): ?> style="display: block;" <?php else: ?> style="display: none" <?php endif; ?> class="listProducts col-xs-12">
+
+                            <?php if(count($products) > 0): ?>
+
+                                <?php foreach( $products as $prod): ?>
+                                    <div class="product col-xs-12">
+                                        <div class="item <?php if($prod->discount == 1): ?> discount <?php endif; ?> <?php if($prod->new == 1): ?> new <?php endif; ?> <?php if($prod->sale == 1): ?> sale <?php endif; ?>">
+                                            <div class="row">
+                                                <div class="image col-lg-4 col-md-5 col-sm-5">
+                                                    <?php if( $prod->image !=''): ?>
+                                                        <img src="/uploads/products/md/<?php echo e($prod->image); ?>" alt="<?php echo e($prod->name); ?>">
+                                                    <?php else: ?>
+                                                        <img src="/uploads/products/md/no_image.png" alt="#">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="information col-lg-8 col-md-7 col-sm-7">
+                                                    <div class="title"><?php echo e($prod->name); ?></div>
+                                                    <div class="desc">
+                                                        <?php echo e(strip_tags($prod->description)); ?>
+
+                                                    </div>
+                                                    <div class="charList">
+                                                        <? $count = 0; ?>
+
+                                                        <?php foreach(unserialize($prod->specification) as $dtbl): ?>
+                                                            <?php if($count++ > 2): ?> <? break; ?>  <?php endif; ?>
+                                                            <div class="item">
+                                                                <div class="name"><?php echo e($dtbl['name']); ?></div>
+                                                                <div class="value"><?php echo e($dtbl['value']); ?></div>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+
+                                                    <div class="infBottom">
+                                                        <div class="rating">
+                                                            <?php for($i = 0; $i < 5 ;$i++): ?>
+                                                                <div class="item <?php if($prod->votes !=0): ?> <?php if($i < (int)($prod->rating_sum / $prod->votes) ): ?> active <?php endif; ?> <?php endif; ?> "></div>
+                                                            <?php endfor; ?>
+                                                        </div>
+
+
+                                                        <div class="price">
+                                                            <?php if($prod->oldPrice > 0): ?>
+                                                                <div class="old"><?php echo e(number_format($prod->oldPrice, 2, ',', '')); ?></div>
+                                                            <?php endif; ?>
+                                                            <div class="now"><span><?php echo e(number_format($prod->price - ($prod->price * $userDiscount), 2, ',', '')); ?></span> Грн</div>
+                                                        </div>
+
+                                                        <a href="/product/<?php echo e($prod->slug); ?>" class="button">
+                                                            Подробнее
+                                                        </a>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+
+                            <?php else: ?>
+                                <div class="col-xs-12">
+                                    <div class="prodEmpty">
+                                        Товаров не найдено
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
+
+
+
+                        <!--сетка-->
+                        <div id="productGrid" <?php if(Session::get('show') == 0): ?> style="display: block" <?php else: ?> style="display: none" <?php endif; ?> class="products col-xs-12">
+                            <!--<div class="products">-->
+                            <?php if(count($products) > 0): ?>
+                                <?php foreach( $products as $prod): ?>
+
+                                    <div class="product col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="item <?php if($prod->discount == 1): ?> discount <?php endif; ?> <?php if($prod->new == 1): ?> new <?php endif; ?> <?php if($prod->sale == 1): ?> sale <?php endif; ?>">
+                                            <div class="image">
+                                                <?php if( $prod->image !=''): ?>
+                                                    <img src="/uploads/products/md/<?php echo e($prod->image); ?>" alt="<?php echo e($prod->name); ?>">
+                                                <?php else: ?>
+                                                    <img src="/uploads/products/md/no_image.png" alt="#">
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="information">
+                                                <div class="title"><?php echo e($prod->name); ?></div>
+                                                <div class="text">
+                                                    <?php echo e(strip_tags($prod->description)); ?>
+
+                                                </div>
+                                                <div class="prices">
+                                                    <?php if($prod->oldPrice > 0): ?>
+                                                        <div class="old"><?php echo e(number_format($prod->oldPrice, 2, ',', '')); ?></div>
+                                                    <?php endif; ?>
+                                                    <div class="now"><span><?php echo e(number_format($prod->price - ($prod->price * $userDiscount), 2, ',', '')); ?></span> Грн</div>
+                                                </div>
+                                                <a href="/product/<?php echo e($prod->slug); ?>" class="button hidden-lg">
+                                                    Подробнее
+                                                </a>
+
+                                            </div>
+                                            <div class="up-block">
+                                                <div class="starts">
+                                                    <?php for($i = 0; $i < 5 ;$i++): ?>
+                                                        <div class="item <?php if($prod->votes !=0): ?> <?php if($i < (int)($prod->rating_sum / $prod->votes) ): ?> active <?php endif; ?> <?php endif; ?> "></div>
+                                                    <?php endfor; ?>
+                                                </div>
+
+                                                <div class="characteristics">
+                                                    <? $count = 0; ?>
+
+                                                    <?php foreach(unserialize($prod->specification) as $dtbl): ?>
+                                                        <?php if($count++ > 2): ?> <? break; ?>  <?php endif; ?>
+                                                        <div class="item">
+                                                            <div class="title"><?php echo e($dtbl['name']); ?></div>
+                                                            <div class="value"><?php echo e($dtbl['value']); ?></div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+
+                                                <a class="button" href="/product/<?php echo e($prod->slug); ?>">
+                                                    Подробнее
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <?php endforeach; ?>
+
+
+                            <?php else: ?>
+                                <div class="col-xs-12">
+                                    <div class="prodEmpty">
+                                        Товаров не найдено
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
+                        <?php echo $__env->make('frontend._pagination',['paginator' => $products->appends(Request::all())], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+    <link rel="stylesheet" href="/frontend/css/contactLenses.css">
+    <link rel="stylesheet" href="/frontend/js/slick/slick-theme.css">
+    <link rel="stylesheet" href="/frontend/js/slick/slick.css">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+    <!--formStyler-->
+    <script type="text/javascript" src="/frontend/js/formStyler/jquery.formstyler.min.js"></script>
+    <link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.css">
+    <link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.theme.css">
+
+    <!--slick slider-->
+    <script src="/frontend/js/slick/slick.min.js"></script>
+
+    <script type="text/javascript" src="/frontend/js/polzunok.js"></script>
+    <script type="text/javascript" src="/frontend/js/contactLenses.js"></script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

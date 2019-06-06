@@ -1,0 +1,203 @@
+<?php $__env->startSection('main'); ?>
+
+    <div class="breadCrumbBg cart">
+        <div class="container">
+            <div class="row">
+                <ul class="breadCrumbs col-xs-12">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/cart">Корзина товаров</a></li>
+                    <li><a href="/cartStepTwo">Оформление заказа</a></li>
+                    <li><a href="#"><?php echo e($page->name); ?></a></li>
+                </ul>
+                <div class="step col-xs-12">
+                    <div class="item cart hidden-xs"><span>Корзина товаров</span></div>
+                    <div class="item order hidden-xs"><span>Оформление заказа</span></div>
+                    <div class="item confirm active"><span>Подтверджение заказа</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="cartBg cartThree">
+        <div class="container">
+            <div class="row">
+                <div class="youOrder">
+                    <div class="ytitle col-xs-12">
+                        <div class="xs-small">
+                            <span>Ваш заказ</span> № <?php echo e($countOrder); ?>
+
+                        </div>
+                    </div>
+
+
+                    <div class="itemsList">
+
+                        <?php if(count($cartProduct) > 0): ?>
+                        <?php echo e($i = 1); ?>
+
+                            <?php foreach($cartProduct as $item): ?>
+                                <div class="orderItem col-xs-12">
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="col-lg-1 col-md-1 col-sm-1 hidden-xs">
+                                                <div class="num">
+                                                    <?php echo e($i++); ?>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="charList">
+                                                    <div class="title">
+                                                        <?php echo e($item['product'][0]->name); ?>
+
+                                                    </div>
+                                                    <ul class="charUl">
+                                                        <?php foreach($item['charlist'] as $char): ?>
+                                                            <li><?php echo e($char['name']); ?> <span><?php echo e($char['value']); ?></span></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
+                                                <div class="total">
+                                                    <div class="count"><?php echo e($item['quantity']); ?></div>
+                                                    <div class="price"><span><?php echo e(number_format($item['quantity'] * $item['product'][0]->price - ($item['product'][0]->price * $userDiscount * $item['quantity']), 2, ',', '')); ?></span> Грн</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            Ваша корзина пустая
+
+                        <?php endif; ?>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="youDelivery">
+                    <div class="dtitle col-xs-12">Доставка:</div>
+
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="deliveryBlock">
+                            <div class="ditem">
+                                <div class="title">Получатель</div>
+                                <div class="value"><?php echo e($name); ?></div>
+                            </div>
+
+                            <div class="ditem">
+                                <div class="title">Телефон</div>
+                                <div class="value"><?php echo e($phone); ?></div>
+                            </div>
+
+
+                            <div class="ditem address">
+                                <div class="title">Адрес доставки</div>
+                                <div class="value">г. <?php echo e($city); ?>, <?php echo e($addres); ?></div>
+                            </div>
+
+                            <div class="ditem block">
+                                <div class="title">Оплата</div>
+                                <div class="value"><?php echo e($buy->name); ?></div>
+                            </div>
+
+
+
+                            <div class="ditem block">
+                                <div class="title">Комментарий к заказу</div>
+                                <div class="value"><?php echo e($coment); ?></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="total">
+                            <div class="totalBlock">
+                                <div class="title">Итого</div>
+                                <div class="titem">
+                                    <span class="text">Товары</span>
+                                    <span class="value"><b><?php echo e(number_format($cart_info['total_price'],2,',','')); ?></b> Грн</span>
+                                </div>
+
+                                <div class="titem">
+                                    <span class="text">Доставка</span>
+                                    <span class="value"><b><?php echo e(number_format($deliveryInfo->price,2,',','')); ?></b> Грн</span>
+                                </div>
+
+                                <div class="titem">
+                                    <span class="text">К оплате</span>
+                                    <span class="value"><b><?php echo e(number_format($cart_info['total_price'] + $deliveryInfo->price ,2,',','')); ?></b> Грн</span>
+                                </div>
+
+                                <form action="/confirmOrder" method="post">
+
+                                    <?php echo csrf_field(); ?>
+
+                                    <input type="hidden" name="name" value="<?php echo e($name); ?>">
+                                    <input type="hidden" name="address" value="<?php echo e($addres); ?>">
+                                    <input type="hidden" name="phone" value="<?php echo e($phone); ?>">
+                                    <input type="hidden" name="city" value="<?php echo e($city); ?>">
+                                    <input type="hidden" name="coment" value="<?php echo e($coment); ?>">
+                                    <input type="hidden" name="buy" value="<?php echo e($buy->id); ?>">
+                                    <input type="hidden" name="delivery" value="<?php echo e($deliveryInfo->id); ?>">
+                                    <input type="hidden" name="warehouse" value="<?php echo e($warehouseInfo->id); ?>">
+                                    <input type="hidden" name="email" value="<?php echo e($mail); ?>">
+                                    <input type="hidden" name="total_cost" value="<?php echo e($cart_info['total_price'] + $deliveryInfo->price); ?>">
+
+                                    <a id="confirmOrder" href="#" class="button">
+                                        Подтвердить заказ
+                                    </a>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+    <link rel="stylesheet" href="/frontend/css/cart.css">	<link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.css">
+    <link rel="stylesheet" href="/frontend/js/formStyler/jquery.formstyler.theme.css">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+    <!--formStyler-->
+    <script type="text/javascript" src="/frontend/js/formStyler/jquery.formstyler.min.js"></script>
+    <script type="text/javascript" src="/frontend/js/cart.js"></script>
+
+    <script type="text/javascript">
+        $('#confirmOrder').click(function (e) {
+            e.preventDefault();
+           $(this).parent('form').submit();
+        });
+    </script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

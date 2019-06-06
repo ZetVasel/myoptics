@@ -1,0 +1,242 @@
+<?php $__env->startSection('main'); ?>
+
+	<h1>
+		<a href="/master/products_management" class="glyphicon glyphicon-circle-arrow-left"></a>
+		<a href="/master/products/add" class="glyphicon glyphicon-plus-sign"></a><?php echo e($title); ?>
+
+	</h1>
+
+	<?php if(Session::has('message')): ?>
+		<div class="alert alert-success" role="alert"><?php echo e(Session::get('message')); ?></div>
+	<?php endif; ?>
+
+	<div class="row prod_sorting">
+		<form class="form-inline" method="GET" id="sorting">
+			<div class="form-group col-sm-3" >
+				<label>Продукт</label>
+				<?php echo Form::select('product', $products_search, Input::get('product'), array( 'class'=>'form-control chosen-select', 'style'=>'max-width: 100%;')); ?>
+
+			</div>
+			<div class="form-group col-sm-3" >
+				<label>Категория</label>
+				<?php echo Form::select('category', $categories, Input::get('category'), array( 'class'=>'form-control chosen-select', 'style'=>'max-width: 100%;')); ?>
+
+			</div>
+
+		</form>
+	</div>
+
+	<?php if( count($products)>0 ): ?>
+		<?php echo Form::open(['class' => 'main_f']); ?>
+
+			<table class="table">
+				<tr>
+					<th colspan="2" width="20%">Наименование товара</th>
+					<th width="10%">Код товара</th>
+					<th width="10%">Цена</th>
+					<!-- <th>Товар в наличии</th> -->
+					<th>Дата публикации</th>
+					<th>Метка</th>
+					<th style="text-align: right;">Управление</th>
+				</tr>
+
+				<?php foreach($products as $post): ?>
+				<tr class="<?php if($post->in_stock==1): ?>success <?php else: ?> danger <?php endif; ?>">
+					<td colspan="2" >
+						<input name="check[]" value="<?php echo e($post->id); ?>" type="checkbox">
+						<a class="black_link" href="/master/products/edit/<?php echo e($post->id); ?>"><?php echo e($post->name); ?></a>
+					</td>
+					<td><?php echo e($post->code); ?></td>
+					<td><?php echo e($post->price); ?></td>
+					<!-- <td>
+						<div data-id="<?php echo e($post->id); ?>">
+							<a title="Наличие товара" class="in_stock btn <?php if( $post->in_stock ): ?>btn-success visible <?php else: ?> btn-danger <?php endif; ?>">
+								<span class="glyphicon <?php if( $post->in_stock ): ?> glyphicon-ok <?php else: ?> glyphicon-remove <?php endif; ?>"></span>
+							</a>
+						</div>
+					</td> -->
+					<td><?php echo e($post->created_at->format('d.m.Y')); ?></td>
+					<td>
+						<div class="form-group" style="margin-right:0;" data-id="<?php echo e($post->id); ?>">
+							<a title="Показывать как новинку" class="new btn <?php if( $post->new ): ?>btn-success visible <?php else: ?> btn-default <?php endif; ?>"><span class="glyphicon glyphicon-asterisk"></span></a>
+							<a title="Показывать как скидку" class="hit btn <?php if( $post->discount ): ?> btn-danger visible <?php else: ?> btn-default <?php endif; ?>"><span class="glyphicon glyphicon-star"></span></a>
+							<a title="Показывать как распродажа" class="promo btn <?php if( $post->sale ): ?>btn-danger visible <?php else: ?> btn-default <?php endif; ?>"><span class="glyphicon glyphicon-flag"></span></a>
+						</div>
+					</td>
+					<td style="text-align: right;">
+						<div class="btn-group">
+							<a title="Редактировать" href="/master/products/edit/<?php echo e($post->id); ?>" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span></a>
+							<a title="Открыть в новом окне" target="_blank" href="/product/<?php echo e($post->slug); ?>" class="btn btn-primary"><span class="glyphicon glyphicon-new-window"></span></a>
+							<button title="Удалить" type="button" class="delete btn btn-danger" data-id="<?php echo e($post->id); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+
+			<div class="select_form">
+				<label id="check_all" class="link">Выбрать все</label>
+				<select name="action" class="form-control">
+				  <option value="delete">Удалить</option>
+				</select>
+				<button type="submit" style="margin-left: 20px;" class="btn btn-success">Применить</button>
+			</div>
+		<?php echo Form::close(); ?>
+
+
+		<!-- navigation //-->
+		<?php echo $products->appends(Input::all())->render(); ?>
+
+
+	<?php else: ?>
+		<div class="alert alert-warning" role="alert">
+		 Нет записей
+		</div>
+	<?php endif; ?>
+	<style>
+		.green{
+
+		}
+	</style>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('styles'); ?>
+	<link rel="stylesheet" href="/dashboard/js/chosen/chosen.min.css">
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+<script src="/dashboard/js/chosen/chosen.jquery.min.js"></script>
+<script>
+	
+	$(document).ready(function(){
+		$('.chosen-select').chosen();
+	});
+	 $(function() {
+	 	
+
+		// удаление записи
+		$('.delete').click( function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', false);
+			$(this).closest("tr").find('input[type="checkbox"][name*="check"]').prop('checked', true);
+			$(this).closest("form").find('select[name="action"] option[value=delete]').prop('selected', true);
+			$(this).closest("form").submit();
+		})
+
+		// удаление записей
+		$("form.main_f").submit(function() {
+			if($('select[name="action"]').val()=='delete' && !confirm('Подтвердите удаление'))
+				return false;
+		});
+
+		// выделить все
+		$("#check_all").on( 'click', function() {
+			$('input[type="checkbox"][name*="check"]').prop('checked', $('input[type="checkbox"][name*="check"]:not(:checked)').length>0 );
+		});
+
+		$('#sorting select').change(function(){
+			$('#sorting').submit();
+		});
+
+		//Наличие товара
+		$('.in_stock').click( function() {
+
+			var icon = $(this);
+			var state = icon.hasClass('visible') ? 0 : 1;
+			if(state) {
+				icon.removeClass('btn-danger');
+				icon.addClass('btn-success visible');
+				icon.children('span').removeClass('glyphicon-remove');
+				icon.children('span').addClass('glyphicon-ok');
+				icon.parent().parent().parent('tr').removeClass('danger');
+				icon.parent().parent().parent('tr').addClass('success');
+			} else {
+				icon.removeClass('visible btn-success');
+				icon.addClass('btn-danger');
+				icon.children('span').removeClass('glyphicon-ok');
+				icon.children('span').addClass('glyphicon-remove');
+				icon.parent().parent().parent('tr').removeClass('success');
+				icon.parent().parent().parent('tr').addClass('danger');
+			}
+
+			$.post( '/master/products', { _token: '<?php echo e(Session::token()); ?>', id: $(this).parent().data('id'), in_stock: state });
+			return false;
+		});
+         // хит товар
+         $('.hit').click( function() {
+
+             var icon = $(this);
+             var state = icon.hasClass('visible') ? 0 : 1;
+             if(state) {
+                 icon.removeClass('btn-default');
+                 icon.addClass('btn-danger visible');
+             } else {
+                 icon.removeClass('visible btn-danger');
+                 icon.addClass('btn-default');
+             }
+             $(this).parent('.form-group').find('.promo').removeClass('visible btn-danger');
+             $(this).parent('.form-group').find('.promo').addClass('btn-default');
+
+             $(this).parent('.form-group').find('.new').removeClass('visible btn-success');
+             $(this).parent('.form-group').find('.new').addClass('btn-default');
+
+
+             $.post( '/master/products', { _token: '<?php echo e(Session::token()); ?>', id: $(this).parent().data('id'), discount: state });
+             return false;
+         });
+
+
+         //НОВЫЙ
+         $('.new').click( function() {
+
+             var icon = $(this);
+             var state = icon.hasClass('visible') ? 0 : 1;
+             if(state) {
+                 icon.removeClass('btn-default');
+                 icon.addClass('btn-success visible');
+             } else {
+                 icon.removeClass('visible btn-success');
+                 icon.addClass('btn-default');
+             }
+
+             $(this).parent('.form-group').find('.hit').removeClass('visible btn-danger');
+             $(this).parent('.form-group').find('.hit').addClass('btn-default');
+
+             $(this).parent('.form-group').find('.promo').removeClass('visible btn-danger');
+             $(this).parent('.form-group').find('.promo').addClass('btn-default');
+
+
+
+             $.post( '/master/products', { _token: '<?php echo e(Session::token()); ?>', id: $(this).parent().data('id'), new: state });
+             return false;
+         });
+
+         //TOP
+         $('.promo').click( function() {
+             var icon = $(this);
+             var state = icon.hasClass('visible') ? 0 : 1;
+             if(state) {
+                 icon.removeClass('btn-default');
+                 icon.addClass('btn-danger visible');
+             } else {
+                 icon.removeClass('visible btn-danger');
+                 icon.addClass('btn-default');
+             }
+
+
+             $(this).parent('.form-group').find('.hit').removeClass('visible btn-danger');
+             $(this).parent('.form-group').find('.hit').addClass('btn-default');
+
+             $(this).parent('.form-group').find('.new').removeClass('visible btn-success');
+             $(this).parent('.form-group').find('.new').addClass('btn-default');
+
+
+             $.post( '/master/products', { _token: '<?php echo e(Session::token()); ?>', id: $(this).parent().data('id'), sale: state });
+             return false;
+         });
+
+     });
+
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

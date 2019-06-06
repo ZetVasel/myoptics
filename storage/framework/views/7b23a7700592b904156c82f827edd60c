@@ -1,0 +1,21 @@
+<div <?php if(!empty($page->image)): ?> style="background: url('/uploads/category/<?php echo e($page->image); ?>');background-repeat: no-repeat;background-position: left;"  <?php endif; ?>  class="breadCrumbBg lenses">
+	<div class="container">
+		<div class="row">
+			<ul class="breadCrumbs col-xs-12">
+				<li><a href="/">Главная</a></li>
+				<?php foreach( $breadcrumbs as $par ): ?>
+					<?php if( isset($par) ): ?>
+						<li><a href="/category/<?php echo e($par->slug); ?>"><?php echo e($par->name); ?></a></li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php if( Request::segment(1) == 'product' && isset($page) ): ?>
+					<li><a href="<?php echo e($page->slug); ?>"><?php echo e($page->name); ?></a></li>
+				<?php endif; ?>
+			</ul>
+			<div class="title col-xs-12">
+				<?php echo e($page->name); ?>
+
+			</div>
+		</div>
+	</div>
+</div>

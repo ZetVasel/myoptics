@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <?php if(  isset( $page->meta_title ) ): ?><title><?php echo e($page->meta_title); ?></title><?php endif; ?>
+    <?php if(  isset( $page->meta_keywords ) ): ?><meta name="keywords" content="<?php echo e($page->meta_keywords); ?>"><?php endif; ?>
+    <?php if(  isset( $page->meta_description )  ): ?><meta name="description" content="<?php echo e($page->meta_description); ?>"><?php endif; ?>
+	<?php if(Input::has('page')): ?>  <link rel="canonical" href="http://myoptics.com.ua/news" /> <?php endif; ?>  
+     <!--css-->
+    <link rel="stylesheet" href="/frontend/css/layout.css">
+    <?php $__env->startSection('styles'); ?>
+    <?php echo $__env->yieldSection(); ?>
+    <link rel="stylesheet" href="/frontend/css/media.css">
+	<style type="text/css">
+    .overlayCart {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 999;
+    }
+    .overlayCart:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .cartSuccess {
+        margin: 170px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 30%;
+        position: relative;
+        transition: all 5s ease-in-out;
+    }
+
+    .cartSuccess h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+    }
+    .cartSuccess .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+    }
+    .cartSuccess .close:hover {
+        color: #06D85F;
+    }
+    .cartSuccess .content {
+        max-height: 30%;
+        overflow: auto;
+    }	
+
+    @media  screen and (max-width: 700px){
+        .box{
+            width: 70%;
+        }
+        .cartSuccess{
+            width: 70%;
+        }
+    }
+</style>
+<?php echo $__env->make('frontend.analyticstracking', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>      
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="top-content col-xs-12">
+                <div class="row">
+                    <div class="logo col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <a href="/">
+                            <img src="/uploads/logo/<?php echo e($settings->logo); ?>" alt="#">
+                        </a>
+                    </div>
+
+                    <div class="right-top-content reset-padding col-lg-4 col-lg-offset-4 col-md-offset-2 col-md-6 col-sm-offset-2 col-sm-6 col-xs-6">
+                        <div class="phones hidden-xs">
+                            <span class="item"><?php echo e($settings->phone1); ?></span>
+                            <span class="item"><?php echo e($settings->phone2); ?></span>
+                        </div>
+                        <div class="icons">
+                            <div class="search"></div>
+                            <?php if(Auth::check()): ?>
+                                <a href="/personal-area">
+                                    <div class="profile"></div>
+                                </a>
+                            <?php else: ?>
+                                <div class="profile"></div>
+                            <?php endif; ?>
+                            <a href="/cart">
+                                <div class="busket">
+                                    <?php if( $cart_info['quantity'] > 0 ): ?>
+                                        <span class="count"><?php echo e($cart_info['quantity']); ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="searchForm" action="/search" method="post">
+                    <?php echo csrf_field(); ?>
+
+                    <input type="text" name="search" placeholder="Введите слово для поиска" required>
+                    <input type="submit" value="Поиск">
+                    <div title="Закрыть" id="closeSearch"></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="burger col-md-6 col-sm-6 col-sm-offset-3 col-md-offset-3 hidden-lg" id="burger"><span>Меню</span></div>
+
+            <ul class="menu col-lg-12 col-lg-offset-0 col-md-6 col-sm-6 col-sm-offset-3 col-md-offset-3 col-xs-12">
+                <li><a <?php if( Request::segment(1) == '' ): ?> class="active" <?php endif; ?> href="/">Главная</a></li>
+
+
+                <?php foreach($categories as $cat): ?>
+                    <li><a <?php if( Request::segment(2) == $cat->slug ): ?> class="active" <?php endif; ?> href="/category/<?php echo e($cat->slug); ?>"><?php echo e($cat->name); ?></a>
+                        <?php if(count( $cat->children ) ): ?>
+                            <ul class="child">
+                                <?php foreach(  $cat->children as $subcat ): ?>
+                                    <li>
+                                        <a href="/category/<?php echo e($subcat->slug); ?>"><?php echo e($subcat->name); ?></a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+
+
+                <?php foreach( $pages as $pg ): ?>
+                    <?php if( $pg->type == 'main' && $pg->slug != '/' && !in_array($pg->id, [41])): ?>
+                        <li><a <?php if( Request::segment(1) == $pg->slug ): ?> class="active" <?php endif; ?> href="/<?php echo e($pg->slug); ?>"><?php echo e($pg->name); ?></a></li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+
+                <?php /*<li>*/ ?>
+                    <?php /*<a href="#">Контактные линзы</a>*/ ?>
+                    <?php /*<ul class="child">*/ ?>
+                        <?php /*<li><a href="#">Bausch&Lomb</a></li>*/ ?>
+                        <?php /*<li><a href="#">Maxima Optics</a></li>*/ ?>
+                        <?php /*<li><a href="#">Henson</a></li>*/ ?>
+                        <?php /*<li><a href="#">Alcon</a></li>*/ ?>
+                        <?php /*<li><a href="#">Avizor</a></li>*/ ?>
+                    <?php /*</ul>*/ ?>
+                <?php /*</li>*/ ?>
+                <?php /*<li><a href="#">Растворы и капли</a></li>*/ ?>
+                <?php /*<li><a href="#">Аксессуары для линз</a></li>*/ ?>
+                <?php /*<li><a href="#">Оплата и доставка</a></li>*/ ?>
+                <?php /*<li><a href="#">Статьи</a></li>*/ ?>
+                <?php /*<li><a href="#">О нас</a></li>*/ ?>
+                <?php /*<li><a href="#">Контакты</a></li>*/ ?>
+            </ul>
+        </div>
+    </div>
+</header>
+
+        <?php echo $__env->yieldContent('main'); ?>
+
+<footer>
+    <div class="border-container">
+        <div class="container">
+            <div class="row">
+                <div class="footer-nav col-xs-12">
+                    <div class="row">
+                        <div class="footLogo col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                            <img src="/uploads/logo/<?php echo e($settings->logo); ?>" alt="#">
+                        </div>
+                        <ul class="footMenu col-lg-9 col-md-8 col-sm-8 hidden-xs">
+                            <li><a href="/">Главная</a></li>
+
+                            <?php echo e($i = 0); ?>
+
+                            <?php foreach($footCatArray as $item): ?>
+                                <?php if($i++ < 3): ?>
+                                <li>
+                                    <a href="<?php if(isset($item['show_block_1'])): ?>/category/<?php endif; ?><?php echo e($item['slug']); ?>"><?php echo e($item['name']); ?></a>
+                                </li>
+                                <?php else: ?>
+                                <li>
+                                    <a href="/<?php echo e($item['slug']); ?>"><?php echo e($item['name']); ?></a>
+                                </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php /*<li><a href="#">Растворы и капли</a></li>*/ ?>
+                            <?php /*<li><a href="#">Аксессуары для линз</a></li>*/ ?>
+                            <?php /*<li><a href="#">Оплата и доставка</a></li>*/ ?>
+                            <?php /*<li><a href="#">Статьи</a></li>*/ ?>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="footerInfo col-xs-12">
+                    <div class="row">
+                        <div class="contactsInfo col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                            <div class="phones">
+                                <?php if(!empty($settings->phone1)): ?>
+                                    <div class="item"><?php echo e($settings->phone1); ?></div>
+                                <?php endif; ?>
+                                <?php if(!empty($settings->phone2)): ?>
+                                    <div class="item"><?php echo e($settings->phone2); ?></div>
+                                <?php endif; ?>
+                            </div>
+                            <?php if(!empty($settings->email)): ?>
+                                <div class="mail"><?php echo e($settings->email); ?></div>
+                            <?php endif; ?>
+                            <?php if(!empty($settings->address)): ?>
+                                <div class="address"><?php echo e($settings->address); ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="footText col-lg-9 col-md-8 col-sm-8 hidden-xs">
+                            <?php echo $settings->footText; ?>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="copir col-xs-12">
+                <span class="pull-left"><?php echo e($settings->copir); ?></span><span class="pull-right dva_com">Раскрутка сайта – <a href="https://dvacom.net" rel="nofollow" >https://dvacom.net</a></span>
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+
+
+<div class="overlay"></div>
+<div class="loginForm" id="loginForm">
+    <div id="closeLoginForm"></div>
+    <div class="title">
+        Вход в личный кабинет
+    </div>
+
+    <form action="/login" method="post">
+        <?php echo csrf_field(); ?>
+
+        <label for="mail">Эл. почта</label>
+        <input type="text" id="mail" name="email" placeholder="konstantin.konstantionovsky@gmail.com" required>
+
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required>
+
+        <div class="formBottom">
+            <input type="checkbox" name="rememberMe" class="rememberMe" id="rememberMe">
+            <label class="rememberLabel" for="rememberMe">Запомнить меня</label>
+            <a href="/password/email">Забыли пароль?</a>
+            <a class="reg" href="/reg">Регистрация</a>
+        </div>
+
+        <div class="loginWithFB">
+            <a href="<?php echo e($facebookAuthLink); ?>" rel="nofollow" >Войти c помощью facebook</a>
+        </div>
+        <div class="loginWithGoogle">
+            <a href="<?php echo e($googleAuthLink); ?>" rel="nofollow">Войти  c помощью google</a>
+        </div>
+
+
+        <input type="submit" value="Войти">
+
+
+    </form>
+
+</div>
+
+
+
+<?php if(Session::has('message')): ?>
+    <div id="popup1" class="overlayCart">
+        <div class="cartSuccess">
+            <div class="content">
+                <?php echo e(Session::get('message')); ?>
+
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+
+       
+
+        <!--js-->
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <!--пользоватские скрипты-->
+        <script type="text/javascript" src="/frontend/js/layout.js"></script>
+<script type="text/javascript">
+    <?php if(!Auth::check()): ?>
+        //профиль
+        $('.profile').click(function () {
+            $(this).toggleClass('active');
+            $('#loginForm').fadeToggle(200);
+            $('.overlay').fadeToggle('fast');
+        });
+    <?php endif; ?>
+
+
+    <?php if(Session::has('message')): ?>
+
+		$(document).ready(function () {
+        $('.overlayCart').css({ "opacity" : "1", "visibility" : "visible"});
+        setTimeout(function () {
+            $('#popup1').fadeOut(800);
+        }, 1500);
+    });
+    <?php endif; ?>
+
+</script>
+        <?php $__env->startSection('scripts'); ?>
+        <?php echo $__env->yieldSection(); ?>
+<!-- QnkgTmlrb2xheSBUc3Vya2Fu -->
+    </body>
+</html>

@@ -1,0 +1,875 @@
+@charset "UTF-8";
+.lensesContentBg {
+  margin-top: -40px; }
+  .lensesContentBg .leftBar {
+    position: relative;
+    border: 1px solid #dffeff;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #ffffff; }
+    .lensesContentBg .leftBar .title {
+      color: #336699;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: "Open Sans Regular", sans-serif;
+      text-align: center;
+      padding-top: 18px;
+      padding-bottom: 15px; }
+    .lensesContentBg .leftBar .selectedFeatures {
+      position: relative;
+      border: 1px solid #b3dbed;
+      padding-left: 8px;
+      padding-right: 8px; }
+      .lensesContentBg .leftBar .selectedFeatures .item {
+        margin-top: 16px;
+        margin-bottom: 30px; }
+        .lensesContentBg .leftBar .selectedFeatures .item .name {
+          font-size: 15px;
+          color: #336699;
+          font-family: "Open Sans Regular", sans-serif;
+          font-weight: bold; }
+        .lensesContentBg .leftBar .selectedFeatures .item .value {
+          margin-top: 11px;
+          position: relative;
+          font-size: 13px;
+          font-family: "Open Sans Regular", sans-serif;
+          color: #336699; }
+          .lensesContentBg .leftBar .selectedFeatures .item .value .delFeature {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            cursor: pointer;
+            background: url("../img/fclose.png");
+            width: 9px;
+            height: 9px; }
+      .lensesContentBg .leftBar .selectedFeatures a.button {
+        display: block;
+        width: 120px;
+        height: 24px;
+        border: 1px solid #b3dbed;
+        background: #ffffff;
+        color: #336699;
+        text-align: center;
+        margin: -8px auto 19px auto;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        padding-top: 5px; }
+        .lensesContentBg .leftBar .selectedFeatures a.button:hover {
+          background: #e1f4f8;
+          transition: 0.3s; }
+      .lensesContentBg .leftBar .selectedFeatures:after {
+        display: inline-block;
+        width: 15px;
+        content: " ";
+        position: absolute;
+        bottom: -15px;
+        right: 0;
+        z-index: 1;
+        left: 0;
+        margin-left: auto;
+        margin-right: auto;
+        border: 7px solid transparent;
+        border-top: 7px solid #b3dbed; }
+    .lensesContentBg .leftBar .featureBlock {
+      padding-left: 8px;
+      padding-top: 14px; }
+      .lensesContentBg .leftBar .featureBlock:last-child {
+        padding-bottom: 12px; }
+      .lensesContentBg .leftBar .featureBlock .ftitle {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        position: relative;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: "Open Sans Regular", sans-serif;
+        color: #555555; }
+        .lensesContentBg .leftBar .featureBlock .ftitle span {
+          display: inline-block;
+          max-width: 180px; }
+        .lensesContentBg .leftBar .featureBlock .ftitle:after {
+          content: " ";
+          position: absolute;
+          right: 0;
+          top: 14px;
+          background: url("../img/openStr.png");
+          width: 10px;
+          height: 6px; }
+        .lensesContentBg .leftBar .featureBlock .ftitle.close:after {
+          background: url("../img/closeStr.png"); }
+      .lensesContentBg .leftBar .featureBlock .fcontent a.button {
+        display: block;
+        width: 100px;
+        height: 24px;
+        border: 1px solid #b3dbed;
+        background: #ffffff;
+        color: #336699;
+        text-align: center;
+        margin: 0 auto 30px auto;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        padding-top: 5px; }
+        .lensesContentBg .leftBar .featureBlock .fcontent a.button:hover {
+          background: #e1f4f8;
+          transition: 0.3s; }
+      .lensesContentBg .leftBar .featureBlock .fcontent .item {
+        /* ╨Ю╤Д╨╛╤А╨╝╨╗╨╡╨╜╨╕╨╡ ╨┐╨╡╤А╨▓╨╛╨╣ ╤З╨░╤Б╤В╨╕ ╤З╨╡╨║╨▒╨╛╨║╤Б╨░ ╨▓ ╨▓╤Л╨║╨╗╤О╤З╨╡╨╜╨╜╨╛╨╝ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╕ (╤Д╨╛╨╜). */
+        /* ╨Ь╨╡╨╜╤П╨╡╨╝ ╤Д╨╛╨╜ ╤З╨╡╨║╨▒╨╛╨║╤Б╨░, ╨║╨╛╨│╨┤╨░ ╨╛╨╜ ╨▓╨║╨╗╤О╤З╨╡╨╜. */
+        /* ╨Ь╨╡╨╜╤П╨╡╨╝ ╤Д╨╛╨╜ ╤З╨╡╨║╨▒╨╛╨║╤Б╨░, ╨║╨╛╨│╨┤╨░ ╨╛╨╜ ╨▓╨║╨╗╤О╤З╨╡╨╜. */
+        margin-top: 8px;
+        margin-bottom: 14px; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox {
+          display: inline-block;
+          vertical-align: top; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:not(checked) {
+          position: absolute;
+          opacity: 0; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:not(checked) + label {
+          position: relative;
+          padding: 1px 0 0 25px; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:checked + label {
+          color: #555555; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:not(checked) + label:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          border-radius: 0;
+          background: #ffffff;
+          transition: 0.3s;
+          border: 1px solid #b3dbed; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:checked + label:after {
+          content: ' ';
+          position: absolute;
+          display: inline-block;
+          background: url("../img/checked.png");
+          width: 10px;
+          height: 8px;
+          left: 3px;
+          top: 4px;
+          transition: 0.3s; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item .filterCheckbox:checked + label:before {
+          border-color: #679ace !important; }
+        .lensesContentBg .leftBar .featureBlock .fcontent .item label {
+          cursor: pointer;
+          display: inline-block;
+          vertical-align: top;
+          color: #336699;
+          font-size: 13px;
+          font-family: "Open Sans Regular", sans-serif;
+          -moz-user-select: none;
+          -khtml-user-select: none;
+          user-select: none; }
+          .lensesContentBg .leftBar .featureBlock .fcontent .item label:hover {
+            color: #555555; }
+            .lensesContentBg .leftBar .featureBlock .fcontent .item label:hover:before {
+              border-color: #679ace !important; }
+    .lensesContentBg .leftBar .priceChange {
+      padding-left: 8px;
+      padding-top: 28px;
+      /* ╨Ъ╨╛╨╜╤В╨╡╨╣╨╜╨╡╤А ╤Б╨╗╨░╨╣╨┤╨╡╤А╨░ */
+      /* ╨Я╨╛╨╗╨╖╤Г╨╜╨╛╨║ */
+      /* ╨│╨╛╤А╨╕╨╖╨╛╨╜╤В╨░╨╗╤М╨╜╤Л╨╣ ╤Б╨╗╨░╨╣╨┤╨╡╤А (╤Б╨░╨╝╨░ ╨┐╨╛╨╗╨╛╤Б╨░ ╨┐╨╛ ╨║╨╛╤В╨╛╤А╨╛╨╣ ╨▒╨╡╨│╨░╨╡╤В ╨┐╨╛╨╗╨╖╤Г╨╜╨╛╨║) */
+      /* ╨┐╨╛╨╖╨╕╤Ж╨╕╨╛╨╜╨╕╤А╤Г╨╡╨╝ ╨┐╨╛╨╗╨╖╤Г╨╜╨║╨╕ */
+      /* ╨╛╤Д╨╛╤А╨╝╨╗╨╡╨╜╨╕╨╡ ╨┐╨╛╨╗╨╛╤Б╤Л ╨┐╨╛ ╨║╨╛╤В╨╛╤А╨╛╨╣ ╤Е╨╛╨┤╨╕╤В ╨┐╨╛╨╗╨╖╤Г╨╜╨╛╨║ */
+      /* ╨╛╤Д╨╛╤А╨╝╨╗╨╡╨╜╨╕╨╡ ╨░╨║╤В╨╕╨▓╨╜╨╛╨│╨╛ ╤Г╤З╨░╤Б╤В╨║╨░ (╨╝╨╡╨╢╨┤╤Г ╨┤╨▓╤Г╨╝╤П ╨┐╨╛╨╗╨╖╤Г╨╜╨║╨░╨╝╨╕) */ }
+      .lensesContentBg .leftBar .priceChange .priceTitle {
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: "Open Sans Regular", sans-serif;
+        color: #555555; }
+      .lensesContentBg .leftBar .priceChange .pricesShow {
+        margin-top: 15px;
+        height: 20px;
+        position: relative; }
+        .lensesContentBg .leftBar .priceChange .pricesShow .leftPrice, .lensesContentBg .leftBar .priceChange .pricesShow .rightPrice {
+          font-size: 16px;
+          color: #336699;
+          font-family: "Open Sans Semibold", sans-serif; }
+        .lensesContentBg .leftBar .priceChange .pricesShow .leftPrice {
+          display: inline-block;
+          position: absolute;
+          left: 0;
+          top: 0; }
+        .lensesContentBg .leftBar .priceChange .pricesShow .rightPrice {
+          display: inline-block;
+          position: absolute;
+          right: 0;
+          top: 0; }
+      .lensesContentBg .leftBar .priceChange #polzunok {
+        margin-left: 6px;
+        width: 244px; }
+      .lensesContentBg .leftBar .priceChange .ui-slider {
+        position: relative; }
+      .lensesContentBg .leftBar .priceChange .ui-slider .ui-slider-handle {
+        position: absolute;
+        z-index: 2;
+        width: 13px;
+        /* ╨Ч╨░╨┤╨░╨╡╨╝ ╨╜╤Г╨╢╨╜╤Г╤О ╤И╨╕╤А╨╕╨╜╤Г */
+        height: 13px;
+        /* ╨╕ ╨▓╤Л╤Б╨╛╤В╤Г */
+        background: url(../img/slider.png) no-repeat;
+        /* ╨║╨░╤А╤В╨╕╨╜╨║╨░ ╨╕╨╖╨╛╨▒╤А╨░╨╢╨░╤О╤Й╨░╤П ╨┐╨╛╨╗╨╖╤Г╨╜╨╛╨║. ╨Ш╨╗╨╕ ╨╝╨╛╨╢╨╜╨╛ ╨╖╨░╨╗╨╕╤В╤М ╤Ж╨▓╨╡╤В╨╛╨╝, ╨╖╨░╨┤╨░╤В╤М ╨▒╨╛╤А╨┤╤О╤А ╨╕ ╤Б╨║╤А╤Г╨│╨╗╨╡╨╜╨╕╤П */
+        cursor: pointer; }
+      .lensesContentBg .leftBar .priceChange .ui-slider .ui-slider-range {
+        position: absolute;
+        z-index: 1;
+        font-size: .7em;
+        display: block;
+        border: 0;
+        overflow: hidden; }
+      .lensesContentBg .leftBar .priceChange .ui-slider-horizontal {
+        height: 8px;
+        /* ╨╖╨░╨┤╨░╨╡╨╝ ╨▓╤Л╤Б╨╛╤В╤Г ╤Б╨╛╨│╨╗╨░╤Б╨╜╨╛ ╨┤╨╕╨╖╨░╨╣╨╜╨░ */ }
+      .lensesContentBg .leftBar .priceChange .ui-slider-horizontal .ui-slider-handle {
+        top: -3px;
+        margin-left: -6px;
+        outline: none; }
+      .lensesContentBg .leftBar .priceChange .ui-slider-horizontal .ui-slider-range {
+        top: 0;
+        height: 100%; }
+      .lensesContentBg .leftBar .priceChange .ui-slider-horizontal .ui-slider-range-min {
+        left: 0; }
+      .lensesContentBg .leftBar .priceChange .ui-slider-horizontal .ui-slider-range-max {
+        right: 0; }
+      .lensesContentBg .leftBar .priceChange .ui-widget-content {
+        background: #ececec; }
+      .lensesContentBg .leftBar .priceChange .ui-widget-header {
+        background: #336699;
+        height: 8px; }
+  .lensesContentBg .rightBar.list:after {
+    height: 1380px; }
+  .lensesContentBg .rightBar .topSettings {
+    position: relative; }
+    .lensesContentBg .rightBar .topSettings .featureButton {
+      display: none; }
+    .lensesContentBg .rightBar .topSettings .sorting {
+      position: absolute;
+      top: -44px;
+      left: 63px; }
+      .lensesContentBg .rightBar .topSettings .sorting span.text {
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+        display: inline-block; }
+      .lensesContentBg .rightBar .topSettings .sorting form.formSort {
+        display: inline-block; }
+        .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox li.selected {
+          background-color: #5790bc; }
+        .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox li:hover {
+          background-color: #5790bc; }
+        .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox__select {
+          background: none !important;
+          box-shadow: none !important;
+          border: 1px solid #b3dbed;
+          border-radius: 0;
+          width: 100px;
+          height: 28px; }
+          .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox__select .jq-selectbox__select-text {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: -3px;
+            color: #ffffff;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            font-weight: 400;
+            text-shadow: none; }
+          .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox__select .jq-selectbox__trigger {
+            border: none;
+            border-radius: 0; }
+            .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox__select .jq-selectbox__trigger .jq-selectbox__trigger-arrow {
+              background: url("../img/sortStr.png");
+              width: 7px;
+              height: 5px;
+              border: none;
+              top: 12px;
+              right: 10px; }
+        .lensesContentBg .rightBar .topSettings .sorting form.formSort .jq-selectbox__dropdown {
+          border: none;
+          border-radius: 0; }
+    .lensesContentBg .rightBar .topSettings .showBlock {
+      z-index: 20;
+      position: absolute;
+      top: -45px;
+      right: 73px;
+      color: #ffffff;
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      height: 31px;
+      padding-right: 1px;
+    }
+      .lensesContentBg .rightBar .topSettings .showBlock span.text {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 10px;
+        margin-right: 10px; }
+      .lensesContentBg .rightBar .topSettings .showBlock .how {
+        display: inline-block;
+        vertical-align: top; }
+        .lensesContentBg .rightBar .topSettings .showBlock .how .plitka {
+          cursor: pointer;
+          padding: 15px;
+          display: inline-block;
+          vertical-align: top;
+          background: url("../img/plitka.png");
+          width: 22px;
+          height: 18px;
+          background-repeat: no-repeat;
+          background-position: center;
+          transition: 0.3s; }
+          .lensesContentBg .rightBar .topSettings .showBlock .how .plitka.active, .lensesContentBg .rightBar .topSettings .showBlock .how .plitka:hover {
+            background: url("../img/plitka-hover.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: 0.3s; }
+          .lensesContentBg .rightBar .topSettings .showBlock .how .plitka.active {
+            outline: 1px solid #b3dbed; }
+        .lensesContentBg .rightBar .topSettings .showBlock .how .list {
+          cursor: pointer;
+          padding: 15px;
+          display: inline-block;
+          vertical-align: top;
+          background-repeat: no-repeat;
+          background: url("../img/list.png");
+          width: 23px;
+          height: 18px;
+          background-repeat: no-repeat;
+          background-position: center;
+          transition: 0.3s; }
+          .lensesContentBg .rightBar .topSettings .showBlock .how .list.active, .lensesContentBg .rightBar .topSettings .showBlock .how .list:hover {
+            background: url("../img/list-hover.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: 0.3s; }
+          .lensesContentBg .rightBar .topSettings .showBlock .how .list.active {
+            outline: 1px solid #b3dbed; }
+  .lensesContentBg .rightBar .lastSeenBlock a.seeMore {
+    display: inline-block;
+    width: 160px;
+    height: 35px;
+    border: 1px solid #336699;
+    color: #336699;
+    font-size: 12px;
+    font-family: "Open Sans Regular", sans-serif;
+    font-weight: bold;
+    text-align: center;
+    line-height: 35px;
+    text-decoration: none;
+    border-radius: 30px;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: -84px;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto; }
+  .lensesContentBg .rightBar .lastSeenBlock .ltitle {
+    font-size: 26px;
+    color: #336699;
+    font-family: "Open Sans Regular", sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px; }
+  .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider {
+    margin-bottom: 50px; }
+    .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .slick-list {
+      height: 390px; }
+    .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .slick-prev, .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .slick-next {
+      top: 44%; }
+    .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .slick-prev {
+      left: 15px; }
+    .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .slick-next {
+      right: 15px; }
+    .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product {
+      z-index: 2; }
+      .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item {
+        position: relative; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item:hover .up-block {
+          opacity: 1;
+          visibility: visible; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item.discount:before {
+          position: absolute;
+          top: 0;
+          right: 15px;
+          content: " ";
+          background: url("../img/metka/discount.png");
+          width: 28px;
+          height: 76px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item.new:before {
+          position: absolute;
+          top: 0;
+          right: 15px;
+          content: " ";
+          background: url("../img/metka/new.png");
+          width: 28px;
+          height: 76px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item.sale:before {
+          position: absolute;
+          top: 0;
+          right: 15px;
+          content: " ";
+          background: url("../img/metka/sale.png");
+          width: 28px;
+          height: 86px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item .image {
+          border: 1px solid #f7f7f7;
+          width: 100%;
+          background: #ffffff; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .item .image img {
+            max-width: 100%; }
+      .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information {
+        padding-bottom: 33px;
+        background: #fafafa;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 15px;
+        height: 135px; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information a.button {
+          display: none; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .title {
+          font-size: 14px;
+          font-family: "Open Sans Semibold", sans-serif;
+          color: #444444;
+          height: 33px;
+          overflow: hidden; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .text {
+          padding-top: 5px;
+          font-family: "Open Sans Regular", sans-serif;
+          font-size: 13px;
+          color: #666666;
+          height: 32px;
+          overflow: hidden;
+          margin-bottom: 15px; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .prices {
+          position: relative; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .prices .old {
+            position: absolute;
+            left: 5px;
+            top: 0;
+            font-size: 13px;
+            color: #999999;
+            font-family: "Open Sans Regular", sans-serif;
+            text-decoration: line-through; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .prices .now {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 18px;
+            color: #336699;
+            font-family: "Open Sans Regular", sans-serif; }
+            .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .information .prices .now span {
+              font-weight: bold;
+              font-size: 24px; }
+      .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block {
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.4s;
+        padding-left: 15px;
+        padding-right: 15px;
+        position: absolute;
+        height: 240px;
+        width: 100%;
+        bottom: -65px;
+        z-index: 10;
+        left: 0;
+        background: #fafafa; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .starts {
+          width: 100px;
+          margin: 12px auto; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .starts .item {
+            vertical-align: top;
+            display: inline-block;
+            background: url("../img/rating/star.png");
+            width: 15px;
+            height: 15px;
+            margin-right: 1px; }
+            .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .starts .item:last-child {
+              margin-right: 0; }
+            .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .starts .item.active {
+              background: url("../img/rating/star-a.png");
+              width: 15px;
+              height: 15px;
+              vertical-align: top; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .characteristics .item {
+          margin-bottom: 15px; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .characteristics .item .title {
+            font-size: 13px;
+            font-weight: bold;
+            font-family: "Open Sans Regular", sans-serif;
+            color: #336699;
+            margin-bottom: 4px; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block .characteristics .item .value {
+            font-size: 13px;
+            font-family: "Open Sans Regular", sans-serif;
+            color: #666666; }
+        .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block a {
+          text-decoration: none;
+          text-transform: uppercase;
+          font-size: 14px;
+          color: #ffffff;
+          font-family: "Open Sans Regular", sans-serif;
+          font-weight: bold; }
+          .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block a.button {
+            display: block;
+            width: 170px;
+            height: 40px;
+            text-align: center;
+            margin: 23px auto 0 auto;
+            padding-top: 12px;
+            background: #3993b0;
+            /* Old browsers */
+            background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+            /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3993b0', endColorstr='#3975b0', GradientType=1);
+            /* IE6-9 fallback on horizontal gradient */ }
+            .lensesContentBg .rightBar .lastSeenBlock .lastSeenSlider .product .up-block a.button:hover {
+              background: #3975b0; }
+  .lensesContentBg .rightBar .listProducts {
+    display: none; }
+    .lensesContentBg .rightBar .listProducts .product {
+      z-index: 2;
+      margin-bottom: 27px; }
+      .lensesContentBg .rightBar .listProducts .product .item {
+        position: relative; }
+        .lensesContentBg .rightBar .listProducts .product .item .image img {
+          max-width: 100%;
+          border: 1px solid #f5f5f5; }
+        .lensesContentBg .rightBar .listProducts .product .item.discount .image:before {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          content: " ";
+          background: url("../img/metka/discount.png");
+          width: 28px;
+          height: 76px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .listProducts .product .item.new .image:before {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          content: " ";
+          background: url("../img/metka/new.png");
+          width: 28px;
+          height: 76px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .listProducts .product .item.sale .image:before {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          content: " ";
+          background: url("../img/metka/sale.png");
+          width: 28px;
+          height: 86px;
+          z-index: 5; }
+        .lensesContentBg .rightBar .listProducts .product .item .information {
+          margin-left: -15px;
+          background: #fafafa; }
+          .lensesContentBg .rightBar .listProducts .product .item .information .title {
+            color: #444444;
+            font-size: 14px;
+            font-family: "Open Sans Semibold", sans-serif;
+            padding-top: 20px;
+            padding-bottom: 8px; }
+          .lensesContentBg .rightBar .listProducts .product .item .information .desc {
+            height: 34px;
+            overflow: hidden;
+            font-size: 13px;
+            color: #666666;
+            font-family: "Open Sans Regular", sans-serif;
+            line-height: 17px; }
+          .lensesContentBg .rightBar .listProducts .product .item .information .charList {
+            font-size: 0;
+            margin-top: 12px; }
+            .lensesContentBg .rightBar .listProducts .product .item .information .charList .item {
+              margin-right: 30px;
+              display: inline-block; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .charList .item:last-child {
+                margin-right: 0; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .charList .item .name {
+                font-size: 13px;
+                color: #336699;
+                font-family: "Open Sans Regular", sans-serif;
+                font-weight: bold; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .charList .item .value {
+                font-size: 13px;
+                font-family: "Open Sans Regular", sans-serif;
+                color: #666666;
+                margin-top: 3px; }
+          .lensesContentBg .rightBar .listProducts .product .item .information .infBottom {
+            position: relative;
+            height: 56px;
+            margin-top: 18px; }
+            .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .rating {
+              margin-top: 9px;
+              display: inline-block;
+              vertical-align: top; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .rating .item {
+                vertical-align: top;
+                display: inline-block;
+                background: url("../img/rating/star.png");
+                width: 15px;
+                height: 15px;
+                margin-right: 1px; }
+                .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .rating .item:last-child {
+                  margin-right: 0; }
+                .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .rating .item.active {
+                  background: url("../img/rating/star-a.png");
+                  width: 15px;
+                  height: 15px;
+                  vertical-align: top; }
+            .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .price {
+              margin-top: 9px;
+              margin-left: 80px;
+              display: inline-block;
+              vertical-align: top;
+              position: relative;
+              width: 210px; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .price .old {
+                position: absolute;
+                left: 5px;
+                top: 0;
+                font-size: 13px;
+                color: #999999;
+                font-family: "Open Sans Regular", sans-serif;
+                text-decoration: line-through; }
+              .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .price .now {
+                position: absolute;
+                right: 4px;
+                top: 0;
+                font-size: 18px;
+                color: #336699;
+                font-family: "Open Sans Regular", sans-serif; }
+                .lensesContentBg .rightBar .listProducts .product .item .information .infBottom .price .now span {
+                  font-weight: bold;
+                  font-size: 24px; }
+            .lensesContentBg .rightBar .listProducts .product .item .information .infBottom a.button {
+              text-decoration: none;
+              color: #ffffff;
+              font-size: 14px;
+              font-family: "Open Sans Regular", sans-serif;
+              font-weight: bold;
+              text-transform: uppercase;
+              position: absolute;
+              top: 0;
+              right: 0;
+              display: block;
+              width: 150px;
+              height: 40px;
+              text-align: center;
+              padding-top: 12px;
+              background: #3993b0;
+              /* Old browsers */
+              background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+              /* FF3.6-15 */
+              background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+              /* Chrome10-25,Safari5.1-6 */
+              background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+              /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+              filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3993b0', endColorstr='#3975b0', GradientType=1);
+              /* IE6-9 fallback on horizontal gradient */ }
+              .lensesContentBg .rightBar .listProducts .product .item .information .infBottom a.button:hover {
+                background: #3975b0; }
+  .lensesContentBg .rightBar .products .product {
+    z-index: 2;
+    height: 330px;
+  }
+    .lensesContentBg .rightBar .products .product:nth-child(n+4) {
+      margin-top: 30px; }
+
+    .lensesContentBg .rightBar.allseen .products .product:nth-child(n+4) {
+      margin-top: 0; }
+
+      .lensesContentBg .rightBar.allseen .products .product {
+      margin-bottom: 30px; }
+
+
+    .lensesContentBg .rightBar .products .product .item {
+      position: relative; }
+      .lensesContentBg .rightBar .products .product .item:hover .up-block {
+        opacity: 1;
+        visibility: visible; }
+      .lensesContentBg .rightBar .products .product .item.discount:before {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        content: " ";
+        background: url("../img/metka/discount.png");
+        width: 28px;
+        height: 76px;
+        z-index: 5; }
+      .lensesContentBg .rightBar .products .product .item.new:before {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        content: " ";
+        background: url("../img/metka/new.png");
+        width: 28px;
+        height: 76px;
+        z-index: 5; }
+      .lensesContentBg .rightBar .products .product .item.sale:before {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        content: " ";
+        background: url("../img/metka/sale.png");
+        width: 28px;
+        height: 86px;
+        z-index: 5; }
+      .lensesContentBg .rightBar .products .product .item .image {
+        border: 1px solid #f7f7f7;
+        width: 100%;
+        background: #ffffff; }
+        .lensesContentBg .rightBar .products .product .item .image img {
+          max-width: 100%; }
+    .lensesContentBg .rightBar .products .product .information {
+      padding-bottom: 33px;
+      background: #fafafa;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 15px;
+      height: 135px; }
+      .lensesContentBg .rightBar .products .product .information .title {
+        font-size: 14px;
+        font-family: "Open Sans Semibold", sans-serif;
+        color: #444444;
+        height: 33px;
+        overflow: hidden; }
+      .lensesContentBg .rightBar .products .product .information .text {
+        padding-top: 5px;
+        font-family: "Open Sans Regular", sans-serif;
+        font-size: 13px;
+        color: #666666;
+        height: 32px;
+        overflow: hidden;
+        margin-bottom: 15px; }
+      .lensesContentBg .rightBar .products .product .information .prices {
+        position: relative; }
+        .lensesContentBg .rightBar .products .product .information .prices .old {
+          position: absolute;
+          left: 5px;
+          top: 0;
+          font-size: 13px;
+          color: #999999;
+          font-family: "Open Sans Regular", sans-serif;
+          text-decoration: line-through; }
+        .lensesContentBg .rightBar .products .product .information .prices .now {
+          position: absolute;
+          right: 0;
+          top: 0;
+          font-size: 18px;
+          color: #336699;
+          font-family: "Open Sans Regular", sans-serif; }
+          .lensesContentBg .rightBar .products .product .information .prices .now span {
+            font-weight: bold;
+            font-size: 24px; }
+    .lensesContentBg .rightBar .products .product .up-block {
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s;
+      padding-left: 15px;
+      padding-right: 15px;
+      position: absolute;
+      height: 240px;
+      width: 100%;
+      bottom: -30px;
+      z-index: 10;
+      left: 0;
+      background: #fafafa; }
+      .lensesContentBg .rightBar .products .product .up-block .starts {
+        width: 100px;
+        margin: 12px auto; }
+        .lensesContentBg .rightBar .products .product .up-block .starts .item {
+          vertical-align: top;
+          display: inline-block;
+          background: url("../img/rating/star.png");
+          width: 15px;
+          height: 15px;
+          margin-right: 1px; }
+          .lensesContentBg .rightBar .products .product .up-block .starts .item:last-child {
+            margin-right: 0; }
+          .lensesContentBg .rightBar .products .product .up-block .starts .item.active {
+            background: url("../img/rating/star-a.png");
+            width: 15px;
+            height: 15px;
+            vertical-align: top; }
+      .lensesContentBg .rightBar .products .product .up-block .characteristics .item {
+        margin-bottom: 15px; }
+        .lensesContentBg .rightBar .products .product .up-block .characteristics .item .title {
+          font-size: 13px;
+          font-weight: bold;
+          font-family: "Open Sans Regular", sans-serif;
+          color: #336699;
+          margin-bottom: 4px; }
+        .lensesContentBg .rightBar .products .product .up-block .characteristics .item .value {
+          font-size: 13px;
+          font-family: "Open Sans Regular", sans-serif;
+          color: #666666; }
+      .lensesContentBg .rightBar .products .product .up-block a {
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #ffffff;
+        font-family: "Open Sans Regular", sans-serif;
+        font-weight: bold; }
+        .lensesContentBg .rightBar .products .product .up-block a.button {
+          display: block;
+          width: 170px;
+          height: 40px;
+          text-align: center;
+          margin: 23px auto 0 auto;
+          padding-top: 12px;
+          background: #3993b0;
+          /* Old browsers */
+          background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+          /* FF3.6-15 */
+          background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+          /* Chrome10-25,Safari5.1-6 */
+          background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+          /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3993b0', endColorstr='#3975b0', GradientType=1);
+          /* IE6-9 fallback on horizontal gradient */ }
+          .lensesContentBg .rightBar .products .product .up-block a.button:hover {
+            background: #3975b0; }
+
+.afterBlock{
+  position: absolute;
+  top: -60px;
+  left: 44px;
+  z-index: 0;
+  width: 780px;
+  height: 1495px;
+  border: 1px solid #b3dbed;
+}
+
+
+#productList{
+  padding: 0;
+}
+
+.prodEmpty{
+  padding-left: 45px;
+  padding-top: 52px;
+  padding-bottom: 20px;
+}
+
+
+/*# sourceMappingURL=contactLenses.css.map */

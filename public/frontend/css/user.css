@@ -1,0 +1,212 @@
+.user_info{width:100%;}
+.pr-table table, .user_info table{width:100%;}
+.pr-table table tr, .user_info table tr{vertical-align:middle;height:35px;border-bottom:1px solid #ccc;}
+.pr-table table tr td, .user_info table tr td{padding-left:10px;line-height:24px;}
+.pr-table table tr td:first-child, .user_info table tr td:first-child{width:30%;color:#666;border-right:1px dotted #ccc;}
+
+.right_section{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.right_section a{
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: #ffffff;
+        font-family: "Open Sans Regular", sans-serif;
+        display: inline-block;
+        width: 250px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background: #3993b0;
+        background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3993b0', endColorstr='#3975b0',GradientType=1 );
+}
+.right_section a:last-child{
+        width: 100px;
+}
+.right_section a:hover{
+        background: #3975b0;
+}
+
+.ordered_pr{width:100%;}
+.ordered_pr tr{vertical-align:middle;min-height:50px;border-bottom:1px solid #ccc;}
+.ordered_pr tr:first-child{height: 40px;background: #578abc;color: #ffffff;}
+.ordered_pr tr td{min-height:40px;vertical-align:middle;padding-top: 10px;padding-bottom: 10px;padding-left: 5px;padding-right: 5px;}
+
+input[type="text"] {
+        margin-top: 15px;
+        width: 100%;
+        height: 40px;
+        border: 1px solid #b3dbed;
+        outline: none;
+        padding-left: 10px;
+        color: #999999;
+        font-size: 14px;
+        font-family: "Open Sans Regular", sans-serif; }
+input[type="text"]::-webkit-input-placeholder, input[type="text"]::-moz-placeholder, input[type="text"]:-moz-placeholder, input[type="text"]:-ms-input-placeholder {
+        color: #999999;
+        font-size: 14px;
+        font-family: "Open Sans Regular", sans-serif; }
+
+input[type="submit"]{
+        outline: none;
+        border: none;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #ffffff;
+        font-family: "Open Sans Regular", sans-serif;
+        font-weight: bold;
+        margin: 30px auto 40px auto;
+        display: block;
+        width: 165px;
+        height: 40px;
+        text-align: center;
+        background: #3993b0;
+        background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3993b0', endColorstr='#3975b0',GradientType=1 );
+        cursor: pointer;
+}
+.relativeBlock{
+        position: relative;
+}
+.relativeBlock .notification{
+        position: absolute;
+        right: 0;
+        top: 0;
+
+}
+.relativeBlock .notification a{
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: #ffffff;
+        font-family: "Open Sans Regular", sans-serif;
+        display: inline-block;
+        width: 250px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background: #3993b0;
+        background: -moz-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: -webkit-linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        background: linear-gradient(45deg, #3993b0 39%, #3975b0 69%, #3975b0 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3993b0', endColorstr='#3975b0',GradientType=1 );
+}
+
+
+
+.notificationForm label{
+        display: inline-block;
+        padding-top: 10px;
+        font-size: 13px;
+        font-family: "Open Sans Regular", sans-serif;
+        color: #000000;
+        padding-bottom: 5px;
+}
+
+.notificationForm label.repeat{
+        margin-top: 10px;
+        padding-top: 5px;
+}
+
+
+.notificationForm input[type="number"],.notificationForm input[type="date"]{
+        padding-left: 15px;
+        height: 40px;
+        border: 1px solid #b3dbed;
+        font-size: 13px;
+        color: #999999;
+        font-family: "Open Sans Regular", sans-serif;
+        width: 100%;
+}
+
+
+
+.notificationForm textarea{
+        height: 100px;
+        padding-left: 10px;
+        padding-top: 5px;
+        border: 1px solid #b3dbed;
+        font-size: 13px;
+        color: #999999;
+        font-family: "Open Sans Regular", sans-serif;
+        width: 100%;
+}
+
+
+
+
+.notificationForm input[type="submit"]{
+        background: #1a438b;
+        font-size: 13px;
+        border-radius: 5px;
+        text-transform: none;
+        margin-top: 15px;
+        margin-left: 0;
+        margin-bottom: 15px;
+}
+.pers_area.not .title{
+        font-size: 16px;
+        font-family: "Open Sans Regular", sans-serif;
+        font-weight: 400;
+        margin-bottom: 10px;
+}
+.pers_area.not .notList table{
+        width: 100%;
+}
+.pers_area.not .notList table .thead{
+        border-bottom: 1px solid #1b4bb8;
+        text-align: left;
+}
+
+.pers_area.not .notList table tr.tbody td .del{
+        background: url("../img/cancel.png");
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+}
+.pers_area.not .notList table tr.tbody{
+       border: none;
+}
+
+
+.pers_area.not .notList table .thead th{
+        padding-bottom: 10px;
+        padding-top: 15px;
+        font-family: "Open Sans Regular", sans-serif;
+        font-size: 13px;
+        color: #1b4bb8;;
+}
+
+.pers_area.not .notList table tr td {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: "Open Sans Regular", sans-serif;
+        font-size: 14px;
+}
+
+@media (max-width: 1199px) {
+        .relativeBlock .notification{
+                position: static;
+                margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+                .ordered_pr tr td{
+                        padding-top: 6px;
+                        font-size: 13px;
+                        padding-bottom: 6px;
+                        padding-left: 2px;
+                        padding-right: 2px;
+                }
+                .right_section a, .relativeBlock .notification a {
+                        margin-bottom: 10px;
+                }
+        }
+}

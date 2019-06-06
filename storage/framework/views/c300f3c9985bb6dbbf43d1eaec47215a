@@ -1,0 +1,36 @@
+<?php $__env->startSection('main'); ?>
+
+	<div class="row pages">
+
+		<div class="col-sm-12">
+			<h1><?php echo e($title); ?></h1>
+		</div>
+		<div class="col-md-2 col-sm-3 col-xs-4 animated flipInX">
+			<a href="/master/orders/show/new">
+				<i class="fa fa-cart-arrow-down fa-3x"></i>
+				<span>Новые заказы <strong>(<?php echo e($new_orders); ?>)</strong></span>
+			</a>
+		</div>
+		<div class="col-md-2 col-sm-3 col-xs-4 animated flipInX">
+			<a href="/master/orders/show/taken">
+				<i class="fa fa-external-link fa-3x"></i>
+				<span>Принятые заказы <strong>(<?php echo e($accept_orders); ?>)</strong></span>
+			</a>
+		</div>
+		<div class="col-md-2 col-sm-3 col-xs-4 animated flipInX">
+			<a href="/master/orders/show/made">
+				<i class="fa fa-check-square-o fa-3x"></i>
+				<span>Выполненные заказы <strong>(<?php echo e($closed_orders); ?>)</strong></span>
+			</a>
+		</div>
+		<div class="col-md-2 col-sm-3 col-xs-4 animated flipInX">
+			<a href="/master/orders/show/canceled">
+				<i class="fa fa-ban fa-3x"></i>
+				<span>Отмененные заказы <strong>(<?php echo e($canceled_orders); ?>)</strong></span>
+			</a>
+		</div>
+
+	</div>
+	<!-- pages end -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

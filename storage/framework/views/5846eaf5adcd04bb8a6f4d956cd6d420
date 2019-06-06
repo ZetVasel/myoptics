@@ -1,0 +1,180 @@
+<?php $__env->startSection('main'); ?>
+
+	<h1><a href="/master/orders/show/<?php echo e($type); ?>" class="glyphicon glyphicon-circle-arrow-left"></a><?php echo e($title); ?></h1>
+	<br>
+	
+	<?php if(Session::has('success')): ?>
+		<div class="alert alert-success" role="alert"><?php echo e(Session::get('success')); ?></div>
+	<?php elseif(Session::has('error')): ?>
+		<div class="alert alert-danger" role="alert"><?php echo e(Session::get('error')); ?></div>
+	<?php endif; ?>
+
+	<table class="table table-striped">
+
+		<?php if( $post->fio ): ?>
+			<tr>
+				<td>Заказ оформил</td>
+				<td><?php echo e($post->fio); ?></td>
+			</tr>
+		<?php endif; ?>
+		<tr>
+			<td>Телефон заказчика</td>
+			<td><?php echo e($post->phone); ?></td>
+		</tr>
+		<?php if( $post->email ): ?>
+			<tr>
+				<td>Email заказчика</td>
+				<td><?php echo e($post->email); ?></td>
+			</tr>
+		<?php endif; ?>
+			<tr>
+				<td>Комментарий</td>
+				<td><?php echo e($post->comment); ?></td>
+			</tr>
+			<tr>
+				<td>Город</td>
+				<td><?php echo e($post->city); ?></td>
+			</tr>
+			<tr>
+				<td>Адрес</td>
+				<td><?php echo e($post->address); ?></td>
+			</tr>
+			<?php if( $delivery !='' ): ?>
+			<tr>
+				<td>Метод доставки</td>
+				<td><?php echo e($delivery->name); ?></td>
+			</tr>	
+			<?php endif; ?>
+			<?php if( $warehouse !='' ): ?> <!-- np -->
+				<tr>
+					<td>Новая почта</td>
+					<td><?php echo e($warehouse->cityRu); ?> - <?php echo e($warehouse->addressRu); ?></td>
+				</tr>
+			<?php endif; ?>
+			<?php if( $payment !='' ): ?>
+			<tr>
+				<td>Метод Оплаты</td>
+				<td><?php echo e($payment->name); ?></td>
+			</tr>	
+			<?php endif; ?>
+	</table>
+
+
+	<h1>Заказанные товары</h1>
+	<table class="table table-bordered table-striped">
+
+		<tr>
+			<td>Название товара</td>
+			<td>Код товара</td>
+			<td>Цена (за 1 товар)</td>
+			<td>Заказанное количество</td>
+			<td>Сумма (с учетом скидки)</td>
+			<td>Характеристики заказа</td>
+		</tr>
+
+		<?php foreach( $ordered_prod as $op ): ?>
+			<tr>
+				<td><a href="/master/products/edit/<?php echo e($op->prod_id); ?>" target="_blank"><?php echo e($op->prod_name); ?></a></td>
+				<td><?php echo e($op->prod_code); ?></td>
+				<td><?php echo e($op->cost); ?> грн.</td>
+				<td><?php echo e($op->quantity); ?></td>
+				<td><?php echo e($op->cost * $op->quantity - ($op->cost * $op->quantity * $op->discount)); ?> грн. (скидка <?php echo e(($op->cost * $op->quantity * $op->discount)); ?> грн. ) </td>
+				<td style="text-align: center"><a href="#" data-id="<?php echo e($op->id); ?>" class="btn btn-primary getChar">Просмотреть</a></td>
+			</tr>
+		<?php endforeach; ?>
+
+
+		<tr>
+			<td colspan="6" class="text-right" style="font-size:16px;">Общая сумма заказа <?php echo e($post->total_cost); ?> грн.</td>
+		</tr>
+	</table>
+
+	<table class="table table-dark table-striped">
+		<tr>
+			<td colspan="2" class="text-center">Дополнительное описание товара</td> <!-- pd -->
+		</tr>
+
+		<?php foreach( $ordered_prod as $pd ): ?>
+			<tr>
+				<td><?php echo e($pd->m); ?></td>
+				<td><?php echo e($pd->v); ?></td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
+
+
+
+	<?php echo Form::open(array( 'class' => 'form-horizontal', 'role' => 'form') ); ?>
+
+
+	<div class="form-group">
+		<?php echo Form::label('status', 'Статус заказа', array('class'=>'col-sm-2 control-label') ); ?>
+
+		<div class="col-sm-2">
+			<?php echo Form::select('status', array('0' => 'Новый', '1' => 'Принят', '2' => 'Выполнен', '3' => 'Отменен' ), $post->status, array( 'class'=>'form-control')); ?>
+
+		</div>
+	</div>
+
+	<div class="form-group">
+		<?php echo Form::label('paid', 'Оплачен', array('class'=>'col-sm-2 control-label') ); ?>
+
+		<div class="col-sm-2">
+			<?php echo Form::select('paid', array('0' => 'Нет', '1' => 'Да'), $post->paid, array( 'class'=>'form-control')); ?>
+
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+		  <button type="submit" class="btn btn-success">Сохранить</button>
+		</div>
+	</div>
+
+	<?php echo Form::close(); ?>
+
+
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="charModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Характеристики заказа</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('scripts'); ?>
+
+	<script type="text/javascript">
+
+		$(document).on('click', '.getChar', function (e) {
+            e.preventDefault();
+            $.post( '/master/orders/edit', { _token: '<?php echo e(Session::token()); ?>', id: $(this).data('id') },
+				function (data) {
+                    var html = '';
+                    $.each(data, function(arrayID, char) {
+						html += '<div class="item"> <span class="name"><b>'+ char.name +'</b> </span> <span class="value">'+ char.value +'</span></div>';
+                    });
+                    $('#modal-body').html(html);
+                    $('#charModal').modal('show');
+            	});
+        });
+
+	</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
